@@ -19,38 +19,38 @@ interface Message {
 
 const predefinedResponses = {
   greeting: [
-    "Hi! I'm Rolando's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
-    "Hello! Welcome to Rolando's portfolio. He's a Full Stack Developer with 3+ years of experience. How can I help you?",
-    "Hey there! I'm here to answer questions about Rolando's background and work. Ask me anything!"
+    "Hi! I'm Boss Jun's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
+    "Hello! Welcome to my boss' portfolio. He's a Full Stack Developer with 3+ years of experience. How can I help you?",
+    "Hey there! I'm here to answer questions about my boss' background and work. Ask me anything!"
   ],
   experience: [
-    "Rolando is currently a Programmer Analyst at Vertere Global Solutions (2025-Present). Previously, he worked at ROHM Electronics Philippines (2023-2025). He graduated with a BS in Computer Engineering from Cavite State University in 2023.",
+    "My boss is currently a Programmer Analyst at Vertere Global Solutions (2025-Present). Previously, he worked at ROHM Electronics Philippines (2023-2025). He graduated with a BS in Computer Engineering from Cavite State University in 2023.",
     "He has 3+ years of full-stack development experience, specializing in .NET, C#, JavaScript, and React. He's worked on enterprise applications, inventory systems, and customer portals."
   ],
   skills: [
     "Backend: .NET/Core, C#, VB.Net, Node.js, PHP | Frontend: React, Next.js, TypeScript, Blazor, jQuery | Databases: MS SQL, MySQL, PostgreSQL | DevOps: Azure, Docker, CI/CD",
-    "His main skills include .NET (3 yrs), C# (3 yrs), JavaScript (3 yrs), React (1.5 yrs), MS SQL (3 yrs), and Azure DevOps. He also works with TypeScript, Next.js, and Tailwind CSS."
+    "His main skills include .NET, C#, JavaScript, React, MS SQL, and Azure DevOps. He also works with TypeScript, Next.js, and Tailwind CSS."
   ],
   projects: [
-    "Rolando has built ERP systems, inventory management tools, customer portals, business dashboards, document management systems, and API integration platforms using modern tech stacks.",
+    "Boss has built inventory management tools, customer portals, business dashboards, document management systems, and API integration platforms using modern tech stacks.",
     "His projects include real-time inventory tracking, automated reporting dashboards, secure document management, and microservices-based platforms."
   ],
   contact: [
-    "You can reach Rolando at rolandojrremolacio@gmail.com or call +639625871454. He's based in San Pedro, Laguna, Philippines.",
+    "You can reach Boss Jun at rolandojrremolacio@gmail.com or call +639625871454. He's based in San Pedro, Laguna, Philippines.",
     "Contact him via email (rolandojrremolacio@gmail.com), the contact form below, or connect on LinkedIn and GitHub. He's open to new opportunities!"
   ],
   default: [
-    "I can answer questions about Rolando's experience, skills, and projects. What would you like to know?",
-    "I'm here to help you learn about Rolando's work and expertise. Feel free to ask about his background or projects!",
+    "I can answer questions about Boss Jun's experience, skills, and projects. What would you like to know?",
+    "I'm here to help you learn about Boss Jun's work and expertise. Feel free to ask about his background or projects!",
     "That's a great question! For specific details, please use the contact form below or reach out directly."
   ]
 }
 
 const quickQuestions = [
-  "What's your experience?",
-  "What technologies do you use?", 
-  "Tell me about your projects",
-  "How can I contact you?"
+  "What's your boss' experience?",
+  "What technologies your boss use?", 
+  "Tell me about your boss' projects",
+  "How can I contact your boss?"
 ]
 
 export default function AIAssistant() {
@@ -122,7 +122,7 @@ export default function AIAssistant() {
     if (messages.length === 0) {
       const welcomeMessage: Message = {
         id: '0',
-        content: "Hi! I'm Rolando's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
+        content: "Hi! I'm Boss Jun's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
         isUser: false,
         timestamp: new Date()
       }
@@ -169,7 +169,7 @@ export default function AIAssistant() {
                 </div>
                 <div>
                   <h3 className="font-semibold">AI Assistant</h3>
-                  <p className="text-xs text-primary-100">Ask me about Rolando</p>
+                  <p className="text-xs text-primary-100">Ask me about Boss Jun</p>
                 </div>
               </div>
               <button
