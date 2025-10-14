@@ -236,7 +236,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have questions or need help customizing this portfolio:
 
 - **Email**: rolandojrremolacio@gmail.com
-- **LinkedIn**: [linkedin.com/in/rolandoremolacio](https://www.linkedin.com/in rolando-jr-remolacio-66849628b)
+- **LinkedIn**: [linkedin.com/in/rolandoremolacio](https://www.linkedin.com/in/rolando-remolacio)
 - **GitHub**: [github.com/rolandoremolacio](https://github.com/paynuj1099)
 
 ## 🙏 Acknowledgments

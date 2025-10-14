@@ -9,7 +9,7 @@ const socialLinks = [
   },
   {
     name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/rolando-jr-remolacio-66849628b/',
+    href: 'https://www.linkedin.com/in/rolando-remolacio',
     icon: Linkedin,
   },
   {

@@ -91,7 +91,7 @@ export default function Hero() {
                 <Github className="w-6 h-6" />
               </Link>
               <Link
-                href="https://www.linkedin.com/in/rolando-jr-remolacio-66849628b"
+                href="https://www.linkedin.com/in/rolando-remolacio"
                 className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
