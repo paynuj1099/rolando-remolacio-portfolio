@@ -14,7 +14,7 @@ const socialLinks = [
   },
   {
     name: 'Facebook',
-    href: 'https://facebook.com/rolandoremolacio',
+    href: 'https://facebook.com/jun.yap1099',
     icon: Facebook,
   },
   {

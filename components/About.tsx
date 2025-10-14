@@ -1,8 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { GraduationCap, Briefcase, User, Code2 } from 'lucide-react'
+import { GraduationCap, Briefcase, User, Code2, Quote } from 'lucide-react'
 import AnimatedCard from './ui/AnimatedCard'
+
+const quotes = [
+  { text: "Code is like humor. When you have to explain it, it's bad.", author: "Cory House" },
+  { text: "First, solve the problem. Then, write the code.", author: "John Johnson" },
+  { text: "Experience is the name everyone gives to their mistakes.", author: "Oscar Wilde" },
+  { text: "In order to be irreplaceable, one must always be different.", author: "Coco Chanel" },
+  { text: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
+  { text: "Make it work, make it right, make it fast.", author: "Kent Beck" },
+]
 
 const timelineData = [
   {
@@ -81,6 +90,26 @@ export default function About() {
                 </p>
               </div>
             </AnimatedCard>
+
+            {/* Quotes Carousel */}
+            <div className="mt-8 overflow-hidden">
+              <div className="flex animate-scroll">
+                {[...quotes, ...quotes].map((quote, index) => (
+                  <div
+                    key={index}
+                    className="flex-shrink-0 w-80 mx-4 p-6 bg-gradient-to-br from-primary-50 to-blue-50 dark:from-gray-800 dark:to-gray-700 rounded-xl border border-primary-200 dark:border-gray-600"
+                  >
+                    <Quote className="w-8 h-8 text-primary-600 dark:text-primary-400 mb-4" />
+                    <p className="text-gray-700 dark:text-gray-300 italic mb-3">
+                      "{quote.text}"
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                      — {quote.author}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </motion.div>
 
           {/* Timeline */}

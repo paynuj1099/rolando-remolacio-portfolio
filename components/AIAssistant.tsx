@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   MessageCircle,
@@ -19,30 +19,30 @@ interface Message {
 
 const predefinedResponses = {
   greeting: [
-    "Hello! I'm Rolando's AI assistant. I can help you learn about his 3+ years of experience as a Full Stack Developer, technical skills in .NET, C#, JavaScript, React, and more. What would you like to know?",
-    "Hi there! Welcome to Rolando's portfolio. He's currently a Programmer Analyst at Vertere Global Solutions with expertise in full-stack development. How can I assist you?",
-    "Greetings! I'm here to help you learn about Rolando's journey from Computer Engineering graduate to experienced Full Stack Developer. Feel free to ask me anything!"
+    "Hi! I'm Rolando's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
+    "Hello! Welcome to Rolando's portfolio. He's a Full Stack Developer with 3+ years of experience. How can I help you?",
+    "Hey there! I'm here to answer questions about Rolando's background and work. Ask me anything!"
   ],
   experience: [
-    "Rolando currently works as a Programmer Analyst at Vertere Global Solutions, Inc. (2025-Present). Previously, he was an Assistant Engineer at ROHM Electronics Philippines (May 2023 - April 2025). He graduated with a BS in Computer Engineering from Cavite State University - Carmona in 2023. He has 3+ years of hands-on full-stack development experience.",
-    "With 3+ years of professional experience, Rolando specializes in .NET, .NET Core, C#, VB.Net for backend, and JavaScript, jQuery, React, Blazor for frontend. He has extensive experience with MS SQL Server, MySQL, REST APIs, Azure DevOps, and modern web technologies."
+    "Rolando is currently a Programmer Analyst at Vertere Global Solutions (2025-Present). Previously, he worked at ROHM Electronics Philippines (2023-2025). He graduated with a BS in Computer Engineering from Cavite State University in 2023.",
+    "He has 3+ years of full-stack development experience, specializing in .NET, C#, JavaScript, and React. He's worked on enterprise applications, inventory systems, and customer portals."
   ],
   skills: [
-    "Rolando's backend skills include: .NET/Core (3 yrs), C# (3 yrs), VB.Net (3 yrs), Node.js (1 yr), PHP (1.5 yrs), REST APIs. Frontend: JavaScript (3 yrs), TypeScript (1.5 yrs), React (1.5 yrs), Next.js (1 yr), Blazor (1.5 yrs), jQuery (3 yrs). Databases: MS SQL (3 yrs), MySQL (1.5 yrs), PostgreSQL (1 yr). DevOps: Azure DevOps, Azure Cloud, CI/CD, Docker.",
-    "His technical stack covers: Backend (.NET, C#, VB.Net, Node.js), Frontend (React, Next.js, TypeScript, Blazor, jQuery), Databases (MS SQL, MySQL, PostgreSQL), Cloud & DevOps (Azure, Docker, CI/CD), and modern styling (Tailwind CSS, Bootstrap 5, Framer Motion)."
+    "Backend: .NET/Core, C#, VB.Net, Node.js, PHP | Frontend: React, Next.js, TypeScript, Blazor, jQuery | Databases: MS SQL, MySQL, PostgreSQL | DevOps: Azure, Docker, CI/CD",
+    "His main skills include .NET (3 yrs), C# (3 yrs), JavaScript (3 yrs), React (1.5 yrs), MS SQL (3 yrs), and Azure DevOps. He also works with TypeScript, Next.js, and Tailwind CSS."
   ],
   projects: [
-    "Rolando has built enterprise-level projects including: ERP systems with .NET Core and React, Inventory Management with Blazor and SignalR, Customer Portals with JWT authentication, Business Intelligence Dashboards with Chart.js, Document Management Systems with Azure Blob storage, and API Integration Platforms with microservices architecture.",
-    "His portfolio includes real-time inventory tracking systems, automated reporting dashboards, customer-facing portals, secure document management with version control, and microservices-based API integration platforms - all built with modern tech stacks."
+    "Rolando has built ERP systems, inventory management tools, customer portals, business dashboards, document management systems, and API integration platforms using modern tech stacks.",
+    "His projects include real-time inventory tracking, automated reporting dashboards, secure document management, and microservices-based platforms."
   ],
   contact: [
-    "You can reach Rolando at rolandojrremolacio@gmail.com or call +639625871454. He's based in San Pedro, Laguna, Philippines. Connect with him on GitHub (paynuj1099), LinkedIn, or Facebook. He's open to new opportunities and collaborations!",
-    "The best way to contact Rolando is through the contact form below, email (rolandojrremolacio@gmail.com), or LinkedIn. He's currently available for freelance projects and full-time opportunities."
+    "You can reach Rolando at rolandojrremolacio@gmail.com or call +639625871454. He's based in San Pedro, Laguna, Philippines.",
+    "Contact him via email (rolandojrremolacio@gmail.com), the contact form below, or connect on LinkedIn and GitHub. He's open to new opportunities!"
   ],
   default: [
-    "That's an interesting question! While I can provide information about Rolando's 3+ years of experience in full-stack development, his technical skills (.NET, C#, React, etc.), and his enterprise projects, for more specific inquiries, please contact him directly.",
-    "I specialize in answering questions about Rolando's professional background, technical expertise, and project portfolio. For other topics, feel free to reach out to him using the contact information provided!",
-    "I can help you learn about Rolando's work experience at Vertere Global Solutions and ROHM Electronics, his technical skills in .NET/React/Azure, or his enterprise-level projects. What would you like to know?"
+    "I can answer questions about Rolando's experience, skills, and projects. What would you like to know?",
+    "I'm here to help you learn about Rolando's work and expertise. Feel free to ask about his background or projects!",
+    "That's a great question! For specific details, please use the contact form below or reach out directly."
   ]
 }
 
@@ -135,11 +135,17 @@ export default function AIAssistant() {
     <>
       {/* Chat Toggle Button */}
       <motion.button
-        onClick={initializeChat}
+        onClick={() => {
+          if (!isOpen) {
+            initializeChat()
+          } else {
+            setIsOpen(false)
+          }
+        }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-primary-600 dark:bg-primary-500 text-white rounded-full shadow-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors flex items-center justify-center"
-        aria-label="Open AI Assistant"
+        aria-label="Toggle AI Assistant"
       >
         <MessageCircle className="w-6 h-6" />
       </motion.button>
@@ -148,13 +154,15 @@ export default function AIAssistant() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="fixed bottom-24 right-6 z-50 w-80 h-96 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden transition-colors duration-300"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="fixed bottom-24 right-6 z-50 w-96 h-[500px] bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 flex flex-col overflow-hidden transition-colors duration-300"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-700 dark:to-blue-700 p-4 text-white flex items-center justify-between">
+            <div 
+              className="bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-700 dark:to-blue-700 p-4 text-white flex items-center justify-between"
+            >
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
                   <Sparkles className="w-4 h-4" />
@@ -246,7 +254,7 @@ export default function AIAssistant() {
             </div>
 
             {/* Input */}
-            <div className="p-4 border-t border-gray-200">
+            <div className="p-4 bg-gray-50 dark:bg-gray-900">
               <div className="flex space-x-2">
                 <input
                   type="text"
@@ -256,16 +264,14 @@ export default function AIAssistant() {
                   placeholder="Ask me anything..."
                   className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
                 />
-                <motion.button
+                <button
                   onClick={() => sendMessage(inputMessage)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                   disabled={!inputMessage.trim() || isTyping}
                   className="px-3 py-2 bg-primary-600 dark:bg-primary-500 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   aria-label="Send message"
                 >
                   <Send className="w-4 h-4" />
-                </motion.button>
+                </button>
               </div>
             </div>
           </motion.div>

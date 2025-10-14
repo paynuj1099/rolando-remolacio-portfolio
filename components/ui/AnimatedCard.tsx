@@ -58,37 +58,10 @@ export default function AnimatedCard({
       }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
     >
-      {/* Gradient overlay */}
-      <motion.div
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        style={{
-          background: `radial-gradient(circle at ${mouseX}px ${mouseY}px, ${glowColor}, transparent 80%)`
-        }}
-      />
-      
       {/* Content */}
-      <div className="relative z-10" style={{ transform: 'translateZ(50px)' }}>
+      <div className="relative z-10">
         {children}
       </div>
-      
-      {/* Shimmer effect */}
-      <motion.div
-        className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none"
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-      >
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
-          animate={{
-            x: ['-100%', '100%']
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 2,
-            ease: 'linear'
-          }}
-        />
-      </motion.div>
     </motion.div>
   )
 }
