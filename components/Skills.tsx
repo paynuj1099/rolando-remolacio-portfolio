@@ -1,87 +1,87 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useEffect, useRef } from 'react'
 import { 
-  CodeBracketIcon, 
-  DevicePhoneMobileIcon, 
-  CloudIcon, 
-  CpuChipIcon,
-  PaintBrushIcon,
-  UserGroupIcon 
-} from '@heroicons/react/24/outline'
+  Code2,
+  Database,
+  Server,
+  Layers,
+  Cloud,
+  GitBranch,
+  Rocket,
+  Zap,
+  Target
+} from 'lucide-react'
+import AnimatedCard from './ui/AnimatedCard'
 
 const skillCategories = [
   {
-    title: 'Frontend Development',
-    icon: CodeBracketIcon,
+    title: 'Backend Development',
+    icon: Server,
     color: 'blue',
     skills: [
-      { name: 'React', level: 95, icon: '⚛️' },
-      { name: 'Next.js', level: 90, icon: '🔺' },
-      { name: 'TypeScript', level: 88, icon: '📘' },
-      { name: 'Tailwind CSS', level: 92, icon: '🎨' },
-      { name: 'JavaScript', level: 95, icon: '💛' },
-      { name: 'HTML/CSS', level: 98, icon: '🌐' },
+      { name: '.NET / .NET Core', level: 90, years: '3 yrs' },
+      { name: 'C#', level: 90, years: '3 yrs' },
+      { name: 'VB.Net', level: 85, years: '3 yrs' },
+      { name: 'Node.js', level: 70, years: '1 yr' },
+      { name: 'PHP', level: 60, years: '1.5 yrs' },
+      { name: 'REST API', level: 85, years: '3 yrs' },
     ]
   },
   {
-    title: 'Backend Development',
-    icon: CpuChipIcon,
-    color: 'green',
-    skills: [
-      { name: 'Node.js', level: 85, icon: '🟢' },
-      { name: 'Express.js', level: 88, icon: '⚡' },
-      { name: 'Python', level: 75, icon: '🐍' },
-      { name: 'PostgreSQL', level: 80, icon: '🐘' },
-      { name: 'MongoDB', level: 82, icon: '🍃' },
-      { name: 'REST APIs', level: 90, icon: '🔌' },
-    ]
-  },
-  {
-    title: 'Mobile Development',
-    icon: DevicePhoneMobileIcon,
+    title: 'Frontend Development',
+    icon: Code2,
     color: 'purple',
     skills: [
-      { name: 'React Native', level: 78, icon: '📱' },
-      { name: 'Expo', level: 80, icon: '🚀' },
-      { name: 'iOS Development', level: 65, icon: '🍎' },
-      { name: 'Android Development', level: 70, icon: '🤖' },
+      { name: 'JavaScript', level: 90, years: '3 yrs' },
+      { name: 'TypeScript', level: 75, years: '1.5 yrs' },
+      { name: 'React', level: 75, years: '1.5 yrs' },
+      { name: 'Next.js', level: 70, years: '1 yr' },
+      { name: 'Blazor', level: 75, years: '1.5 yrs' },
+      { name: 'jQuery', level: 85, years: '3 yrs' },
+      { name: 'Tailwind CSS', level: 80, years: '1.5 yrs' },
+      { name: 'Bootstrap', level: 90, years: '3 yrs' },
     ]
   },
   {
-    title: 'Cloud & DevOps',
-    icon: CloudIcon,
-    color: 'indigo',
+    title: 'Database Management',
+    icon: Database,
+    color: 'green',
     skills: [
-      { name: 'AWS', level: 75, icon: '☁️' },
-      { name: 'Vercel', level: 92, icon: '▲' },
-      { name: 'Docker', level: 70, icon: '🐳' },
-      { name: 'Git/GitHub', level: 95, icon: '📚' },
-      { name: 'CI/CD', level: 72, icon: '🔄' },
+      { name: 'MS SQL Server', level: 90, years: '3 yrs' },
+      { name: 'MySQL', level: 75, years: '1.5 yrs' },
+      { name: 'Database Design', level: 85, years: '3 yrs' },
     ]
   },
   {
-    title: 'Design & UI/UX',
-    icon: PaintBrushIcon,
-    color: 'pink',
-    skills: [
-      { name: 'Figma', level: 85, icon: '🎭' },
-      { name: 'Adobe XD', level: 78, icon: '🎨' },
-      { name: 'Photoshop', level: 75, icon: '🖼️' },
-      { name: 'UI Design', level: 88, icon: '✨' },
-      { name: 'UX Research', level: 80, icon: '🔍' },
-    ]
-  },
-  {
-    title: 'Soft Skills',
-    icon: UserGroupIcon,
+    title: 'DevOps & Cloud',
+    icon: Cloud,
     color: 'orange',
     skills: [
-      { name: 'Team Leadership', level: 85, icon: '👥' },
-      { name: 'Communication', level: 90, icon: '💬' },
-      { name: 'Problem Solving', level: 92, icon: '🧩' },
-      { name: 'Project Management', level: 83, icon: '📋' },
-      { name: 'Mentoring', level: 80, icon: '🎓' },
+      { name: 'Azure DevOps', level: 75, years: '1.5 yrs' },
+      { name: 'CI/CD', level: 70, years: '1.5 yrs' },
+    ]
+  },
+  {
+    title: 'Architecture & Design',
+    icon: Layers,
+    color: 'pink',
+    skills: [
+      { name: 'MVC Pattern', level: 90, years: '3 yrs' },
+      { name: 'Microservices', level: 70, years: '1.5 yrs' },
+      { name: 'API Design', level: 85, years: '3 yrs' },
+      { name: 'System Design', level: 80, years: '3 yrs' },
+    ]
+  },
+  {
+    title: 'Version Control',
+    icon: GitBranch,
+    color: 'indigo',
+    skills: [
+      { name: 'Git', level: 85, years: '3 yrs' },
+      { name: 'GitHub', level: 85, years: '3 yrs' },
+      { name: 'Azure Repos', level: 80, years: '1.5 yrs' },
     ]
   },
 ]
@@ -100,7 +100,7 @@ const getColorClasses = (color: string) => {
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-20 bg-gray-50">
+    <section id="skills" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -110,12 +110,12 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Skills & Expertise
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Here's a comprehensive overview of my technical skills and expertise areas, 
-            continuously growing through hands-on projects and learning.
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            Comprehensive overview of my technical skills and expertise, built through hands-on experience 
+            in full-stack development and problem-solving.
           </p>
         </motion.div>
 
@@ -126,23 +126,26 @@ export default function Skills() {
             const colorClasses = getColorClasses(category.color)
             
             return (
-              <motion.div
+              <AnimatedCard
                 key={category.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow"
+                glowColor={`rgba(59, 130, 246, 0.2)`}
+                className="p-8"
               >
-                {/* Category Header */}
-                <div className="flex items-center mb-6">
-                  <div className={`p-3 rounded-xl ${colorClasses.split(' ').slice(2).join(' ')} mr-4`}>
-                    <Icon className={`w-6 h-6 ${colorClasses.split(' ')[2]}`} />
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                >
+                  {/* Category Header */}
+                  <div className="flex items-center mb-6">
+                    <div className={`p-3 rounded-xl ${colorClasses.split(' ').slice(2).join(' ')} dark:bg-opacity-20 mr-4`}>
+                      <Icon className={`w-6 h-6 ${colorClasses.split(' ')[2]} dark:text-primary-400`} />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                      {category.title}
+                    </h3>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">
-                    {category.title}
-                  </h3>
-                </div>
 
                 {/* Skills List */}
                 <div className="space-y-4">
@@ -160,19 +163,21 @@ export default function Skills() {
                     >
                       {/* Skill Header */}
                       <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center">
-                          <span className="text-lg mr-2">{skill.icon}</span>
-                          <span className="font-medium text-gray-900 group-hover:text-primary-600 transition-colors">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                             {skill.name}
                           </span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
+                            {skill.years}
+                          </span>
                         </div>
-                        <span className="text-sm font-medium text-gray-500">
+                        <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
                           {skill.level}%
                         </span>
                       </div>
                       
                       {/* Progress Bar */}
-                      <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${skill.level}%` }}
@@ -190,40 +195,77 @@ export default function Skills() {
                     </motion.div>
                   ))}
                 </div>
-              </motion.div>
+                </motion.div>
+              </AnimatedCard>
             )
           })}
         </div>
 
-        {/* Additional Info */}
+        {/* Carousel Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mt-16 bg-gradient-to-r from-primary-600 to-blue-600 rounded-2xl p-8 text-center text-white"
+          className="mt-16 bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-700 dark:to-blue-700 rounded-2xl p-8 text-center text-white shadow-xl overflow-hidden"
         >
           <h3 className="text-2xl font-bold mb-4">
-            Always Learning & Growing
+            Passionate About Technology
           </h3>
-          <p className="text-primary-100 mb-6 max-w-3xl mx-auto">
-            Technology evolves rapidly, and so do I. I'm constantly learning new tools, 
-            frameworks, and methodologies to stay at the forefront of web development. 
-            Currently exploring: GraphQL, Machine Learning, and Web3 technologies.
+          <p className="text-primary-50 dark:text-primary-100 mb-8 max-w-3xl mx-auto">
+            With a solid foundation in software development and a problem-solving mindset, 
+            I enjoy turning complex requirements into clean, efficient solutions.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">
-              🧠 Currently Learning: GraphQL
-            </span>
-            <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">
-              🤖 Exploring: AI/ML Integration
-            </span>
-            <span className="px-4 py-2 bg-white/20 rounded-full text-sm font-medium">
-              🔗 Interested: Web3 Development
-            </span>
+          
+          {/* Auto-scrolling Carousel */}
+          <div className="relative overflow-hidden">
+            <motion.div
+              className="flex gap-4"
+              animate={{
+                x: [0, -1400],
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 20,
+                  ease: "linear",
+                },
+              }}
+            >
+              {/* First set of items */}
+              <CarouselItem icon={Database} text="Full Stack Development" />
+              <CarouselItem icon={Code2} text="Clean Code Advocate" />
+              <CarouselItem icon={Server} text="Scalable Solutions" />
+              <CarouselItem icon={Rocket} text="Fast Delivery" />
+              <CarouselItem icon={Zap} text="Performance Optimization" />
+              <CarouselItem icon={Target} text="Problem Solver" />
+              <CarouselItem icon={Layers} text="Modern Architecture" />
+              <CarouselItem icon={Cloud} text="Cloud Native" />
+              
+              {/* Duplicate set for seamless loop */}
+              <CarouselItem icon={Database} text="Full Stack Development" />
+              <CarouselItem icon={Code2} text="Clean Code Advocate" />
+              <CarouselItem icon={Server} text="Scalable Solutions" />
+              <CarouselItem icon={Rocket} text="Fast Delivery" />
+              <CarouselItem icon={Zap} text="Performance Optimization" />
+              <CarouselItem icon={Target} text="Problem Solver" />
+              <CarouselItem icon={Layers} text="Modern Architecture" />
+              <CarouselItem icon={Cloud} text="Cloud Native" />
+            </motion.div>
           </div>
         </motion.div>
       </div>
     </section>
+  )
+}
+
+// Carousel Item Component
+function CarouselItem({ icon: Icon, text }: { icon: any; text: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium whitespace-nowrap hover:bg-white/30 transition-colors">
+      <Icon className="w-5 h-5" />
+      {text}
+    </div>
   )
 }

@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website built with Next.js, React, Tailwind CSS, and an integrated AI assistant. This portfolio showcases my skills, projects, and experience as a full-stack developer.
 
-![Portfolio Preview](https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop)
+![Portfolio Preview](https://unsplash.com/photos/a-computer-screen-with-a-link-on-it-7IcARfSxo2Y)
 
 ## ✨ Features
 
