@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    default: 'Rolando Remolacio - Full Stack Developer',
+    default: 'Rolando Remolacio',
     template: '%s | Rolando Remolacio'
   },
   description: 'Full-stack developer passionate about creating innovative web solutions using modern technologies.',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: process.env.NEXT_PUBLIC_SITE_URL || 'https://rolandoremolacioje.azurewebsites.net',
-    title: 'Rolando Remolacio - Full Stack Developer',
+    title: 'Rolando Remolacio',
     description: 'Full-stack developer passionate about creating innovative web solutions using modern technologies.',
     siteName: 'Rolando Remolacio Portfolio',
   },
