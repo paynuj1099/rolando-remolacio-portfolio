@@ -16,6 +16,7 @@ const navigation = [
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const [isDragging, setIsDragging] = useState(false)
   const dragControls = useDragControls()
 
   useEffect(() => {
@@ -48,6 +49,9 @@ export default function Navigation() {
         dragControls={dragControls}
         dragMomentum={false}
         dragElastic={0}
+        dragListener={false}
+        onDragStart={() => setIsDragging(true)}
+        onDragEnd={() => setIsDragging(false)}
         className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50"
       >
         <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full shadow-2xl px-6 py-3">
@@ -95,9 +99,11 @@ export default function Navigation() {
                   </motion.div>
                   
                   {/* Tooltip */}
-                  <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                    {item.name}
-                  </span>
+                  {!isDragging && (
+                    <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                      {item.name}
+                    </span>
+                  )}
                 </Link>
               )
             })}

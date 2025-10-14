@@ -93,7 +93,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Rolando Remolacio. All rights reserved.
           </p>
           <p className="text-gray-600 dark:text-gray-400 text-sm mt-2 sm:mt-0 flex items-center">
-            Made with <Heart className="h-4 w-4 text-red-500 dark:text-red-400 mx-1 fill-current" /> using Next.js & Tailwind CSS
+            This portfolio is built using Next.js & Tailwind CSS
           </p>
         </div>
       </div>

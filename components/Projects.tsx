@@ -10,63 +10,75 @@ import AnimatedCard from './ui/AnimatedCard'
 const projects = [
   {
     id: 1,
-    title: 'Enterprise Resource Planning System',
-    description: 'Comprehensive ERP system built with .NET Core and React for managing business operations, inventory, and reporting. Features role-based access control and real-time data synchronization.',
-    image: '/images/projects/erp.jpg',
-    technologies: ['.NET Core', 'C#', 'React', 'MS SQL', 'Azure'],
-    githubUrl: '#',
-    liveUrl: '#',
-    category: 'Full Stack',
+    title: 'Assisteon Staffing',
+    description: 'Staffing agency website with detailed services, contact forms built using .NET Razor Pages.',
+    image: '/images/projects/assisteon_staffing_project.png',
+    technologies: ['.NET Core', 'C#', 'JavaScript', 'Razor Pages', 'Smarter ASP'],
+    // githubUrl: '#',
+    liveUrl: 'https://assisteonstaffing.com',
+    category: 'Frontend',
+    tag: 'Live',
+    platform: 'Web',
   },
   {
     id: 2,
-    title: 'Inventory Management System',
-    description: 'Real-time inventory tracking application with automated stock alerts, barcode scanning, and comprehensive reporting dashboard built with Blazor and SQL Server.',
-    image: '/images/projects/inventory.jpg',
-    technologies: ['Blazor', 'C#', 'MS SQL', 'SignalR', 'Bootstrap'],
-    githubUrl: '#',
-    liveUrl: '#',
+    title: 'Digital Ledger',
+    description: 'Inventory tracking application with automated stock alerts, barcode scanning, and comprehensive reporting dashboard built with MVC and SQL Server.',
+    image: '/images/projects/digital_ledger.png',
+    technologies: ['.NET Core MVC', 'C#', 'MS SQL', 'Bootstrap'],
+    // githubUrl: '#',
+    liveUrl: null,
     category: 'Full Stack',
+    tag: 'In-House',
+    platform: 'Web',
   },
   {
     id: 3,
-    title: 'Customer Portal',
-    description: 'Interactive customer-facing portal for order tracking, support tickets, and account management. Built with React and .NET Web API with JWT authentication.',
-    image: '/images/projects/portal.jpg',
-    technologies: ['React', 'JavaScript', '.NET Web API', 'MySQL', 'Tailwind CSS'],
-    githubUrl: '#',
-    liveUrl: '#',
+    title: 'Product Status Visualization',
+    description: 'Production tracking desktop application with real-time status updates, data visualization, and reporting features using Windows Forms and MS SQL.',
+    image: '/images/projects/product_placement_category_visualization.png',
+    technologies: ['.NET Windows Form', 'C#', 'MS SQL'],
+    // githubUrl: '#',
+    liveUrl: null,
     category: 'Full Stack',
+    tag: 'In-House',
+    platform: 'Windows',
   },
   {
     id: 4,
-    title: 'Reporting Dashboard',
-    description: 'Business intelligence dashboard with interactive charts, data visualization, and automated report generation using React and Chart.js.',
-    image: '/images/projects/dashboard.jpg',
-    technologies: ['React', 'Chart.js', 'Node.js', 'PostgreSQL'],
-    githubUrl: '#',
-    liveUrl: '#',
-    category: 'Frontend',
+    title: 'Daily Checksheet',
+    description: 'Web-based daily checksheet application for logging and tracking daily tasks using barcodes, with user authentication and roles.',
+    image: '/images/projects/daily_checksheet.png',
+    technologies: ['.NET', 'C#', 'MS SQL', 'JavaScript', 'Bootstrap'],
+    // githubUrl: '#',
+    liveUrl: null,
+    category: 'Full Stack',
+    tag: 'In-House',
+    platform: 'Web',
   },
   {
     id: 5,
-    title: 'Document Management System',
-    description: 'Secure document storage and management system with version control, approval workflows, and Azure Blob storage integration.',
-    image: '/images/projects/dms.jpg',
+    title: 'Data Mapping Automation',
+    description: 'Desktop application to automate data mapping and transformation tasks, integratingMS SQL for efficient data handling.',
+    image: '/images/projects/data_mapping_automation.png',
     technologies: ['.NET', 'VB.Net', 'Azure Blob', 'MS SQL', 'jQuery'],
-    githubUrl: '#',
-    liveUrl: '#',
-    category: 'Backend',
+    // githubUrl: '#',
+    liveUrl: null,
+    category: 'Full Stack',
+    tag: 'In-House',
+    platform: 'Windows',
   },
   {
     id: 6,
-    title: 'API Integration Platform',
-    description: 'Microservices-based API integration platform for connecting multiple third-party services with error handling and monitoring.',
-    image: '/images/projects/api.jpg',
-    technologies: ['.NET Core', 'C#', 'Redis', 'Docker', 'Azure DevOps'],
-    githubUrl: '#',
-    liveUrl: '#',
+    title: 'Data Retrieval Ledger',
+    description: 'Web application for managing and tracking data retrieval requests, with user roles and reporting features.',
+    image: '/images/projects/data_retrieval_ledger.png',
+    technologies: ['React', 'JavaScript', 'NodeJS', 'ExpressJS', 'MS SQL', 'Jquery'],
+    // githubUrl: '#',
+    liveUrl: null,
     category: 'Backend',
+    tag: 'In-House',
+    platform: 'Web',
   },
 ]
 
@@ -93,9 +105,12 @@ export default function Projects() {
           <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
             Featured Projects
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-4">
             Here are some of my recent projects that showcase my skills in web development, 
             from frontend interfaces to full-stack applications.
+          </p>
+          <p className="text-sm text-gray-500 dark:text-gray-500 italic mb-8">
+            *Project images and website links are used under fair use and demonstration purposes.
           </p>
 
           {/* Category Filter */}
@@ -134,28 +149,41 @@ export default function Projects() {
               >
                 {/* Project Image */}
                 <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                {/* Fallback gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-200 via-primary-300 to-primary-400 flex items-center justify-center">
-                  <Code2 className="w-16 h-16 text-white opacity-50" />
-                </div>
+                  {project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none'
+                      }}
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary-200 via-primary-300 to-primary-400 flex items-center justify-center">
+                      <Code2 className="w-16 h-16 text-white opacity-50" />
+                    </div>
+                  )}
                 
                 {/* Overlay with links */}
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-4">
-                  <Link
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    <span>Live Demo</span>
-                  </Link>
+                  {project.liveUrl ? (
+                    <Link
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      <span>Live View</span>
+                    </Link>
+                  ) : (
+                    <span className="bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg font-medium flex items-center space-x-2 cursor-not-allowed">
+                      <ExternalLink className="w-4 h-4" />
+                      <span>In-House Project</span>
+                    </span>
+                  )}
+                  {/* GitHub button
                   <Link
                     href={project.githubUrl}
                     target="_blank"
@@ -165,15 +193,35 @@ export default function Projects() {
                     <Github className="w-4 h-4" />
                     <span>Code</span>
                   </Link>
+                  */}
                 </div>
               </div>
 
               {/* Project Content */}
               <div className="p-6">
-                {/* Category Badge */}
-                <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-sm font-medium rounded-full mb-3">
-                  {project.category}
-                </span>
+                {/* Tag and Category Badges */}
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
+                  {/* Tag 1: Live or In-House */}
+                  <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
+                    project.tag === 'Live' 
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' 
+                      : 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300'
+                  }`}>
+                    {project.tag}
+                  </span>
+                  {/* Category Badge */}
+                  <span className="inline-block px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs font-medium rounded-full">
+                    {project.category}
+                  </span>
+                  {/* Tag 2: Web or Windows */}
+                  <span className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
+                    project.platform === 'Web'
+                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                      : 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300'
+                  }`}>
+                    {project.platform}
+                  </span>
+                </div>
                 
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                   {project.title}

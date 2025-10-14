@@ -1,8 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useAnimation } from 'framer-motion'
 import { GraduationCap, Briefcase, User, Code2, Quote } from 'lucide-react'
 import AnimatedCard from './ui/AnimatedCard'
+import { useState } from 'react'
 
 const quotes = [
   { text: "Code is like humor. When you have to explain it, it's bad.", author: "Cory House" },
@@ -41,6 +42,8 @@ const timelineData = [
 ]
 
 export default function About() {
+  const [isPaused, setIsPaused] = useState(false)
+
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -70,11 +73,8 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">My Story</h3>
             <AnimatedCard glowColor="rgba(59, 130, 246, 0.3)">
-              <div className="flex items-center mb-6">
-                <User className="w-8 h-8 text-primary-600 dark:text-primary-400 mr-3" />
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">My Story</h3>
-              </div>
               <div className="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
                 <p>
                   I'm a passionate Full Stack Developer with hands-on experience in building robust, scalable, 
@@ -92,8 +92,33 @@ export default function About() {
             </AnimatedCard>
 
             {/* Quotes Carousel */}
-            <div className="mt-8 overflow-hidden">
-              <div className="flex animate-scroll">
+            <div 
+              className="mt-8 relative overflow-hidden"
+            >
+              {/* Gradient fade edges */}
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
+              
+              <motion.div 
+                className="flex cursor-grab active:cursor-grabbing"
+                drag="x"
+                dragConstraints={{ left: -2400, right: 0 }}
+                dragElastic={0.1}
+                onDragStart={() => setIsPaused(true)}
+                onDragEnd={() => setIsPaused(false)}
+                onClick={() => setIsPaused(!isPaused)}
+                animate={!isPaused ? {
+                  x: [0, -2400]
+                } : {}}
+                transition={{
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    duration: 20,
+                    ease: "linear",
+                  },
+                }}
+              >
                 {[...quotes, ...quotes].map((quote, index) => (
                   <div
                     key={index}
@@ -108,7 +133,7 @@ export default function About() {
                     </p>
                   </div>
                 ))}
-              </div>
+              </motion.div>
             </div>
           </motion.div>
 
