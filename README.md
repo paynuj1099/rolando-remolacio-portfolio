@@ -2,7 +2,7 @@
 
 A modern, responsive portfolio website built with Next.js, React, Tailwind CSS, and an integrated AI assistant. This portfolio showcases my skills, projects, and experience as a full-stack developer.
 
-![Portfolio Preview](https://unsplash.com/photos/a-computer-screen-with-a-link-on-it-7IcARfSxo2Y)
+![Portfolio Preview](public/images/portfolio_preview.png)
 
 ## ✨ Features
 
@@ -40,7 +40,7 @@ A modern, responsive portfolio website built with Next.js, React, Tailwind CSS, 
 ### 1. Clone the Repository
 
 \`\`\`bash
-git clone https://github.com/rolandoremolacio/portfolio.git
+git clone https://github.com/paynuj1099/rolando-remolacio-portfolio.git
 cd portfolio
 \`\`\`
 
@@ -235,9 +235,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 If you have questions or need help customizing this portfolio:
 
-- **Email**: hello@rolandoremolacio.dev
-- **LinkedIn**: [linkedin.com/in/rolandoremolacio](https://linkedin.com/in/rolandoremolacio)
-- **GitHub**: [github.com/rolandoremolacio](https://github.com/rolandoremolacio)
+- **Email**: rolandojrremolacio@gmail.com
+- **LinkedIn**: [linkedin.com/in/rolandoremolacio](https://www.linkedin.com/in rolando-jr-remolacio-66849628b)
+- **GitHub**: [github.com/rolandoremolacio](https://github.com/paynuj1099)
 
 ## 🙏 Acknowledgments
 
@@ -249,4 +249,4 @@ If you have questions or need help customizing this portfolio:
 
 ---
 
-Made with ❤️ by [Rolando Remolacio](https://rolandoremolacio.dev)
+Made with ❤️ by [Rolando Remolacio](https://rolando-remolacio-portfolio.vercel.app)
