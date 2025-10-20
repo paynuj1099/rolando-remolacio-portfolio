@@ -20,7 +20,7 @@ const timelineData = [
     title: 'Programmer Analyst',
     organization: 'Vertere Global Solutions, Inc.',
     period: '2025 - Present',
-    description: 'Full-stack development using .NET, C#, JavaScript, and React. Built enterprise applications with Azure DevOps, MS SQL, and modern web technologies. Lead backend architecture and database design.',
+    description: 'Full-stack development using .NET, C#, JavaScript, and React. Built enterprise applications with Azure DevOps, MS SQL, and modern web technologies.',
     icon: Briefcase,
   },
   {
