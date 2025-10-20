@@ -59,9 +59,9 @@ const projects = [
   {
     id: 5,
     title: 'Data Mapping Automation',
-    description: 'Desktop application to automate data mapping and transformation tasks, integratingMS SQL for efficient data handling.',
+    description: 'Desktop application to automate data mapping and transformation tasks, integrating MS SQL for efficient data handling.',
     image: '/images/projects/data_mapping_automation.png',
-    technologies: ['.NET', 'VB.Net', 'Azure Blob', 'MS SQL', 'jQuery'],
+    technologies: ['.NET Desktop Application', 'MS SQL', 'C#'],
     // githubUrl: '#',
     liveUrl: null,
     category: 'Full Stack',
