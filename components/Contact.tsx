@@ -157,7 +157,7 @@ export default function Contact() {
                 Let's Connect
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                I'm currently available for freelance projects and full-time opportunities. 
+                I'm currently available for freelance projects opportunities. 
                 If you have a project in mind or just want to chat about technology, 
                 feel free to reach out through any of the channels below.
               </p>
