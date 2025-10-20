@@ -62,6 +62,7 @@ export default function Navigation() {
             <Link 
               href="/" 
               className="text-xl font-bold bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-400 dark:to-blue-400 bg-clip-text text-transparent hover:from-primary-700 hover:to-blue-700 transition-all mr-2"
+              draggable={false}
             >
               RR
             </Link>

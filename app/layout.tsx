@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import AIAssistant from '@/components/AIAssistant'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { Analytics } from '@vercel/analytics/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -58,6 +59,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <AIAssistant />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
