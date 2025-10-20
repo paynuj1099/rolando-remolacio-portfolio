@@ -28,7 +28,7 @@ const timelineData = [
     title: 'Assistant Engineer 1',
     organization: 'ROHM Electronics Philippines, Inc.',
     period: 'May 2023 — April 2025',
-    description: 'Developed responsive web applications using React, jQuery, and modern JavaScript frameworks. Collaborated with clients to deliver custom web solutions.',
+    description: 'Developed web applications using various technologies. Maintained and enhanced existing systems, collaborated with cross-functional teams, and contributed to process improvements.',
     icon: Briefcase,
   },
   {
