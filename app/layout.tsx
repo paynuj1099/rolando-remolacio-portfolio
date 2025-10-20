@@ -49,11 +49,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300`}>
+    <html lang="en" className="scroll-smooth overflow-x-hidden" suppressHydrationWarning>
+      <body className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300 overflow-x-hidden w-full`}>
         <ThemeProvider>
           <Navigation />
-          <main className="min-h-screen">
+          <main className="min-h-screen overflow-x-hidden">
             {children}
           </main>
           <Footer />
