@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://rolandoremolacioje.azurewebsites.net',
+    url: process.env.NEXT_PUBLIC_SITE_URL || 'https://rolando-remolacio-portfolio.vercel.app',
     title: 'Rolando Remolacio',
     description: 'Full-stack developer passionate about creating innovative web solutions using modern technologies.',
     siteName: 'Rolando Remolacio Portfolio',
