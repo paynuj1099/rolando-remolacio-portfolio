@@ -61,7 +61,7 @@ const projects = [
     title: 'Data Mapping Automation',
     description: 'Desktop application to automate data mapping and transformation tasks, integrating MS SQL for efficient data handling.',
     image: '/images/projects/data_mapping_automation.png',
-    technologies: ['.NET Desktop Application', 'MS SQL', 'C#'],
+    technologies: ['.NET Windows Form', 'C#', 'MS SQL'],
     // githubUrl: '#',
     liveUrl: null,
     category: 'Full Stack',
