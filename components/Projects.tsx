@@ -11,7 +11,7 @@ const projects = [
   {
     id: 1,
     title: 'Assisteon Staffing',
-    description: 'Staffing agency website with detailed services, contact forms built using .NET Razor Pages.',
+    description: 'Staffing agency website with detailed services and contact forms built using .NET Razor Pages.',
     image: '/images/projects/assisteon_staffing_project.png',
     technologies: ['.NET Core', 'C#', 'JavaScript', 'Razor Pages', 'Smarter ASP'],
     // githubUrl: '#',
