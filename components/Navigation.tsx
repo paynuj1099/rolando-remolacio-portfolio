@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence, useDragControls } from 'framer-motion'
 import { Home, User, Briefcase, Code, Mail, Menu, X, Move } from 'lucide-react'
+import ThemeToggle from './ThemeToggle'
 
 const navigation = [
   { name: 'Home', href: '#home', icon: Home },
@@ -52,9 +53,10 @@ export default function Navigation() {
         dragListener={false}
         onDragStart={() => setIsDragging(true)}
         onDragEnd={() => setIsDragging(false)}
-        className="hidden md:block fixed top-6 left-1/2 -translate-x-1/2 z-50"
+        style={{ x: "-50%" }}
+        className="hidden md:block fixed top-6 left-1/2 z-50 select-none"
       >
-        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full shadow-2xl px-6 py-3">
+        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full shadow-2xl px-6 py-3 select-none">
           <div className="flex items-center space-x-2">
             {/* Logo */}
             <Link 
@@ -66,10 +68,10 @@ export default function Navigation() {
             
             {/* Drag Handle */}
             <div 
-              className="cursor-move p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              className="cursor-move p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 select-none touch-none"
               onPointerDown={(e) => dragControls.start(e)}
             >
-              <Move className="w-4 h-4" />
+              <Move className="w-4 h-4 pointer-events-none" />
             </div>
             
             {/* Separator */}
@@ -107,6 +109,12 @@ export default function Navigation() {
                 </Link>
               )
             })}
+            
+            {/* Separator */}
+            <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1"></div>
+            
+            {/* Theme Toggle */}
+            <ThemeToggle />
           </div>
         </div>
       </motion.nav>
@@ -184,6 +192,19 @@ export default function Navigation() {
                   )
                 })}
               </nav>
+              
+              {/* Theme Toggle - Mobile */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700"
+              >
+                <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
+                  Theme
+                </p>
+                <ThemeToggle />
+              </motion.div>
             </div>
           </motion.div>
         )}

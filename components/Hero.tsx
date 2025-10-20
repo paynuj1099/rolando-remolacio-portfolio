@@ -99,13 +99,14 @@ export default function Hero() {
               >
                 <Linkedin className="w-6 h-6" />
               </Link>
-              <Link
+              <a
                 href="mailto:rolandojrremolacio@gmail.com"
                 className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                 aria-label="Email"
+                rel="noopener noreferrer"
               >
                 <Mail className="w-6 h-6" />
-              </Link>
+              </a>
             </motion.div>
           </motion.div>
 
@@ -129,8 +130,9 @@ export default function Hero() {
                   alt="Rolando Remolacio"
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover z-10"
+                  className="object-cover z-10 pointer-events-none select-none"
                   priority
+                  draggable={false}
                 />
               </div>
               
