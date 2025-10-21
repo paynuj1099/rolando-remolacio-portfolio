@@ -2,27 +2,33 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useDragControls } from 'framer-motion'
-import { Home, User, Briefcase, Code, Mail, Menu, X, Move } from 'lucide-react'
+import { Home, User, Briefcase, Code, Mail, Menu, X, Move, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 
 const navigation = [
-  { name: 'Home', href: '#home', icon: Home },
-  { name: 'About', href: '#about', icon: User },
-  { name: 'Projects', href: '#projects', icon: Briefcase },
-  { name: 'Skills', href: '#skills', icon: Code },
-  { name: 'Contact', href: '#contact', icon: Mail },
+  { name: 'Home', href: '/#home', icon: Home },
+  { name: 'About', href: '/#about', icon: User },
+  { name: 'Projects', href: '/#projects', icon: Briefcase },
+  { name: 'Skills', href: '/#skills', icon: Code },
+  { name: 'Contact', href: '/#contact', icon: Mail },
+  { name: 'Blog', href: '/blog', icon: BookOpen },
 ]
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [isDragging, setIsDragging] = useState(false)
+  const [isMinimized, setIsMinimized] = useState(false)
+  const pathname = usePathname()
   const dragControls = useDragControls()
 
   useEffect(() => {
     const handleScroll = () => {
-      // Detect active section
+      // Only detect sections on homepage
+      if (pathname !== '/') return
+      
       const sections = ['home', 'about', 'projects', 'skills', 'contact']
       for (const section of sections) {
         const element = document.getElementById(section)
@@ -36,9 +42,12 @@ export default function Navigation() {
       }
     }
 
+    // Run immediately on mount and when pathname changes
+    handleScroll()
+    
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  }, [pathname])
 
   const closeMenu = () => setIsOpen(false)
 
@@ -56,7 +65,7 @@ export default function Navigation() {
         style={{ x: "-50%" }}
         className="hidden md:block fixed top-6 left-1/2 z-50 select-none"
       >
-        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full shadow-2xl px-6 py-3 select-none">
+        <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-gray-700 rounded-full shadow-2xl select-none transition-all px-6 py-3">
           <div className="flex items-center space-x-2">
             {/* Logo */}
             <Link 
@@ -75,47 +84,61 @@ export default function Navigation() {
               <Move className="w-4 h-4 pointer-events-none" />
             </div>
             
-            {/* Separator */}
-            <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1"></div>
-            
-            {/* Navigation Items */}
-            {navigation.map((item) => {
-              const Icon = item.icon
-              const isActive = activeSection === item.href.slice(1)
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="relative group"
-                  onClick={closeMenu}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`p-3 rounded-full transition-all duration-300 ${
-                      isActive
-                        ? 'bg-primary-600 dark:bg-primary-500 text-white'
-                        : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                  >
-                    <Icon className="w-5 h-5" />
-                  </motion.div>
-                  
-                  {/* Tooltip */}
-                  {!isDragging && (
-                    <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                      {item.name}
-                    </span>
-                  )}
-                </Link>
-              )
-            })}
-            
-            {/* Separator */}
-            <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1"></div>
+            {/* Navigation Items - Hidden when minimized */}
+            {!isMinimized && (
+              <>
+                {navigation.map((item) => {
+                  const Icon = item.icon
+                  const section = item.href.startsWith('/#') ? item.href.slice(2) : item.href.slice(1)
+                  const isActive = pathname === '/blog' && section === 'blog' ? true : pathname === '/' && activeSection === section
+
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="relative group"
+                      onClick={closeMenu}
+                    >
+                      <motion.div
+                        whileHover={{ scale: 1.06 }}
+                        whileTap={{ scale: 0.96 }}
+                        className={`relative flex items-center justify-center p-3 rounded-full transition-all duration-200 ${
+                          isActive
+                            ? 'bg-primary-600 dark:bg-primary-500 text-white'
+                            : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                        }`}
+                      >
+                        <Icon className="w-5 h-5" />
+                      </motion.div>
+
+                      {!isDragging && (
+                        <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-gray-900 dark:bg-gray-700 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                          {item.name}
+                        </span>
+                      )}
+                    </Link>
+                  )
+                })}
+
+                {/* Separator */}
+                <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1"></div>
+              </>
+            )}
             
             {/* Theme Toggle */}
             <ThemeToggle />
+            
+            {/* Separator */}
+            <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1"></div>
+            
+            {/* Minimize / Expand Button */}
+            <button
+              aria-label={isMinimized ? 'Expand navigation' : 'Minimize navigation'}
+              onClick={() => setIsMinimized(!isMinimized)}
+              className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+            >
+              {isMinimized ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+            </button>
           </div>
         </div>
       </motion.nav>
@@ -169,7 +192,14 @@ export default function Navigation() {
               <nav className="space-y-2 mt-4">
                 {navigation.map((item, index) => {
                   const Icon = item.icon
-                  const isActive = activeSection === item.href.slice(1)
+                  // Extract section from href (e.g., "/#home" -> "home", "/blog" -> "blog")
+                  const section = item.href.startsWith('/#') 
+                    ? item.href.slice(2) 
+                    : item.href.slice(1)
+                  const isActive = pathname === '/blog' && section === 'blog' 
+                    ? true 
+                    : pathname === '/' && activeSection === section
+                  
                   return (
                     <motion.div
                       key={item.name}
