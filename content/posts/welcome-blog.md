@@ -15,7 +15,7 @@ This is my first time writing a blog, so I’m still learning, okay? HAHAHA.
 <br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;Why did I even make this portfolio? I already have one, actually, but I can’t take ownership of it because I got the source code on GitHub and just changed all the details and added some tweaks to the design. If you want to check it, here is the link: 
 **<u><a href="https://rolandoremolacioje.azurewebsites.net" target="_blank" rel="noopener noreferrer">My 1st Portfolio</a></u>**.<br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;That’s why I decided to create this personal portfolio of mine from scratch, but with the help of AI to have good separation of concerns and architectural layout, since I’m still new to Next.js and TypeScript.
+&nbsp;&nbsp;&nbsp;&nbsp;So, I decided to build this personal portfolio from scratch—with a little help from AI—to really learn about good architecture and separation of concerns, since I’m still new to Next.js and TypeScript.
 <br><br>
 &nbsp;&nbsp;&nbsp;&nbsp;I also took advantage of Claude Sonnet 4.5 to learn the best practices for Next.js and TS architecture. :) But the design, idea, and everything is from my experience and creativity. LOL, why am I explaining this haha.
 <br><br>
