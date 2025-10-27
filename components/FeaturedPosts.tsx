@@ -6,7 +6,7 @@ import { Calendar, ArrowRight } from 'lucide-react'
 
 export default async function FeaturedPosts() {
   const allPosts = await getAllPosts()
-  const featuredPosts = allPosts.slice(0, 3) // Get latest 3 posts
+  const featuredPosts = allPosts.slice(0, 3)
 
   if (featuredPosts.length === 0) return null
 
@@ -19,7 +19,7 @@ export default async function FeaturedPosts() {
             Latest from the Blog
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Thoughts, tutorials, and insights on web development
+            Thoughts, tutorials, personal experiences, insights on web development, design, and technology.
           </p>
         </div>
 
