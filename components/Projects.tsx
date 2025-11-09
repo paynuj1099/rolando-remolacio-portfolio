@@ -23,7 +23,7 @@ const projects = [
     {
     id: 6,
     title: 'Product Landing Page',
-    description: 'Production landing page demo showcasing product features with interactive 3D elements using Three.js.',
+    description: 'Product landing page demo showcasing product features with interactive 3D elements using Three.js.',
     image: '/images/projects/product_landing_page_demo.png',
     technologies: ['React', 'TypeScript', 'Three.js', 'Vite', 'Vercel'],
     // githubUrl: '#',
