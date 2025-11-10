@@ -42,6 +42,19 @@ const predefinedResponses = {
     "You can reach Boss Jun at rolandojrremolacio@gmail.com or call +639625871454. He's based in San Pedro, Laguna, Philippines.",
     "Contact him via email (rolandojrremolacio@gmail.com), the contact form below, or connect on LinkedIn and GitHub. He's open to new opportunities!"
   ],
+  resume: [
+    "Sure! You can download Boss Jun's resume here:\n\n[DOWNLOAD_RESUME]",
+    "Of course! Here's the link to download his CV:\n\n[DOWNLOAD_RESUME]",
+    "Absolutely! Click below to download his resume:\n\n[DOWNLOAD_RESUME]"
+  ],
+  cv: [
+    "Sure! You can download Boss Jun's CV here:\n\n[DOWNLOAD_RESUME]",
+    "Here you go! Download his CV below:\n\n[DOWNLOAD_RESUME]"
+  ],
+  download: [
+    "You can download Boss Jun's resume here:\n\n[DOWNLOAD_RESUME]",
+    "Here's the download link for his resume:\n\n[DOWNLOAD_RESUME]"
+  ],
   default: [
     "I can answer questions about Boss Jun's experience, skills, and projects. What would you like to know?",
     "I'm here to help you learn about Boss Jun's work and expertise. Feel free to ask about his background or projects!",
@@ -258,6 +271,18 @@ export default function AIAssistant() {
     
     if (message.includes('hello') || message.includes('hi') || message.includes('hey') || message === '') {
       return predefinedResponses.greeting[Math.floor(Math.random() * predefinedResponses.greeting.length)]
+    }
+    
+    if (message.includes('resume') || message.includes('send me') && message.includes('resume')) {
+      return predefinedResponses.resume[Math.floor(Math.random() * predefinedResponses.resume.length)]
+    }
+    
+    if (message.includes('cv') || message.includes('curriculum vitae')) {
+      return predefinedResponses.cv[Math.floor(Math.random() * predefinedResponses.cv.length)]
+    }
+    
+    if (message.includes('download')) {
+      return predefinedResponses.download[Math.floor(Math.random() * predefinedResponses.download.length)]
     }
     
     if (message.includes('experience') || message.includes('work') || message.includes('background')) {
