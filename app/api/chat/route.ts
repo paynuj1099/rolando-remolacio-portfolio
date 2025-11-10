@@ -5,7 +5,7 @@ const CHATBOT_ID = process.env.NEXT_PUBLIC_CHATBASE_CHATBOT_ID || 'kgFk4M06j__Sj
 
 export async function POST(request: NextRequest) {
   try {
-    const { messages } = await request.json()
+    const { messages, conversationId } = await request.json()
 
     // Validate input
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
@@ -15,17 +15,24 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    const requestBody: any = {
+      chatbotId: CHATBOT_ID,
+      messages: messages,
+      stream: false,
+    }
+
+    // Add conversationId if provided for tracking
+    if (conversationId) {
+      requestBody.conversationId = conversationId
+    }
+
     const response = await fetch('https://www.chatbase.co/api/v1/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${CHATBASE_API_KEY}`,
       },
-      body: JSON.stringify({
-        chatbotId: CHATBOT_ID,
-        messages: messages,
-        stream: false,
-      }),
+      body: JSON.stringify(requestBody),
     })
 
     if (!response.ok) {

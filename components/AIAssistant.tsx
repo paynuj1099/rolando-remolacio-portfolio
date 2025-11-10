@@ -22,7 +22,7 @@ interface Message {
 
 const predefinedResponses = {
   greeting: [
-    "Hi! I'm Boss Jun's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
+    "Hi! I'm Neo, Boss Jun's AI assistant. You can ask me anything. Yes, Anything!",
     "Hello! Welcome to my boss' portfolio. He's a Full Stack Developer with 3+ years of experience. How can I help you?",
     "Hey there! I'm here to answer questions about my boss' background and work. Ask me anything!"
   ],
@@ -271,24 +271,27 @@ export default function AIAssistant() {
       timestamp: new Date()
     }
 
-    setMessages(prev => [...prev, userMessage])
+    const updatedMessages = [...messages, userMessage]
+    setMessages(updatedMessages)
     setInputMessage('')
     setIsTyping(true)
 
     try {
-      // Send message to Chatbase API
+      // Convert conversation history to Chatbase format
+      const conversationHistory = updatedMessages.map(msg => ({
+        content: msg.content,
+        role: msg.isUser ? 'user' : 'assistant'
+      }))
+
+      // Send full conversation context to Chatbase API
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          messages: [
-            {
-              content: content.trim(),
-              role: 'user',
-            },
-          ],
+          messages: conversationHistory,
+          conversationId: currentChatId, // Include conversation ID for tracking
         }),
       })
 
@@ -330,7 +333,7 @@ export default function AIAssistant() {
       setCurrentChatId(newChatId)
       const welcomeMessage: Message = {
         id: '0',
-        content: "Hi! I'm Boss Jun's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
+        content: "Hi! I'm Neo, Boss Jun's AI assistant. Feel free to ask me anything—yes, anything—as long as it's not malicious or inappropriate.",
         isUser: false,
         timestamp: new Date()
       }
