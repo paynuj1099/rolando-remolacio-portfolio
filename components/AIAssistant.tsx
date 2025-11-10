@@ -119,7 +119,17 @@ export default function AIAssistant() {
   }
 
   useEffect(() => {
-    scrollToBottom()
+    // Only auto-scroll if user was already near bottom or for user messages
+    if (messagesContainerRef.current && messages.length > 0) {
+      const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current
+      const isNearBottom = scrollHeight - scrollTop - clientHeight < 150
+      const lastMessage = messages[messages.length - 1]
+      
+      // Auto-scroll for user messages or if already near bottom
+      if (lastMessage.isUser || isNearBottom) {
+        scrollToBottom()
+      }
+    }
   }, [messages])
 
   useEffect(() => {
