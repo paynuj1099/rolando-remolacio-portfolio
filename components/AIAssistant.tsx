@@ -7,7 +7,10 @@ import {
   X,
   Send,
   Sparkles,
-  User
+  User,
+  Copy,
+  Check,
+  ArrowDown
 } from 'lucide-react'
 
 interface Message {
@@ -53,11 +56,184 @@ const quickQuestions = [
   "How can I contact your boss?"
 ]
 
+interface ChatHistory {
+  id: string
+  title: string
+  messages: Message[]
+  timestamp: Date
+}
+
+const CodeBlock = ({ code }: { code: string }) => {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(code)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div className="relative my-2 group">
+      <button
+        onClick={handleCopy}
+        className="absolute top-2 right-2 p-1.5 bg-gray-700 hover:bg-gray-600 rounded text-white opacity-0 group-hover:opacity-100 transition-opacity"
+        title="Copy code"
+      >
+        {copied ? (
+          <Check className="w-4 h-4" />
+        ) : (
+          <Copy className="w-4 h-4" />
+        )}
+      </button>
+      <pre className="bg-gray-800 dark:bg-gray-900 text-gray-100 p-3 pr-12 rounded-lg overflow-x-auto text-xs">
+        <code>{code}</code>
+      </pre>
+    </div>
+  )
+}
+
 export default function AIAssistant() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [showScrollButton, setShowScrollButton] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
+  const [showHistory, setShowHistory] = useState(false)
+  const [chatHistory, setChatHistory] = useState<ChatHistory[]>([])
+  const [currentChatId, setCurrentChatId] = useState<string>('')
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleScroll = () => {
+    if (messagesContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = messagesContainerRef.current
+      const isNearBottom = scrollHeight - scrollTop - clientHeight < 100
+      setShowScrollButton(!isNearBottom)
+    }
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  useEffect(() => {
+    // Load chat history from localStorage
+    const savedHistory = localStorage.getItem('chatHistory')
+    if (savedHistory) {
+      const parsed = JSON.parse(savedHistory)
+      setChatHistory(parsed.map((chat: any) => ({
+        ...chat,
+        timestamp: new Date(chat.timestamp),
+        messages: chat.messages.map((msg: any) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp)
+        }))
+      })))
+    }
+  }, [])
+
+  useEffect(() => {
+    // Close menu when clicking outside
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowMenu(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text)
+  }
+
+  const renderMessageContent = (content: string) => {
+    const parts: JSX.Element[] = []
+    let lastIndex = 0
+    
+    // Find all code blocks
+    const codeBlockRegex = /```(\w+)?\n([\s\S]+?)```/g
+    let match
+    
+    while ((match = codeBlockRegex.exec(content)) !== null) {
+      // Add text before code block
+      if (match.index > lastIndex) {
+        const textBefore = content.substring(lastIndex, match.index)
+        parts.push(
+          <span key={`text-${lastIndex}`} dangerouslySetInnerHTML={{ __html: formatTextContent(textBefore) }} />
+        )
+      }
+      
+      // Add code block
+      parts.push(
+        <CodeBlock key={`code-${match.index}`} code={match[2].trim()} />
+      )
+      
+      lastIndex = match.index + match[0].length
+    }
+    
+    // Add remaining text
+    if (lastIndex < content.length) {
+      const textAfter = content.substring(lastIndex)
+      parts.push(
+        <span key={`text-${lastIndex}`} dangerouslySetInnerHTML={{ __html: formatTextContent(textAfter) }} />
+      )
+    }
+    
+    return <>{parts}</>
+  }
+
+  const formatTextContent = (content: string) => {
+    // Convert markdown-style formatting to HTML
+    let formatted = content
+    
+    // Inline code: `code`
+    formatted = formatted.replace(/`([^`]+)`/g, '<code class="bg-gray-200 dark:bg-gray-600 px-1.5 py-0.5 rounded text-xs font-mono">$1</code>')
+    
+    // Social media links with icons
+    const socialIcons = {
+      facebook: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+      instagram: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>',
+      x: '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+      email: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>',
+      phone: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>'
+    }
+    
+    // Convert markdown links to clickable social icons with proper spacing
+    formatted = formatted.replace(/\[Facebook\]\(([^)]+)\)/gi, (match, url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mr-3 mb-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors" title="Facebook">${socialIcons.facebook}<span class="text-sm">Facebook</span></a>`
+    })
+    formatted = formatted.replace(/\[Instagram\]\(([^)]+)\)/gi, (match, url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mr-3 mb-2 text-pink-600 dark:text-pink-400 hover:text-pink-700 dark:hover:text-pink-300 transition-colors" title="Instagram">${socialIcons.instagram}<span class="text-sm">Instagram</span></a>`
+    })
+    formatted = formatted.replace(/\[X\]\(([^)]+)\)/gi, (match, url) => {
+      return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mr-3 mb-2 text-gray-900 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" title="X">${socialIcons.x}<span class="text-sm">X</span></a>`
+    })
+    
+    // Bold text: **text** or __text__
+    formatted = formatted
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>')
+      // Headers: ### Header
+      .replace(/^### (.+)$/gm, '<h3 class="font-semibold text-base mt-3 mb-2">$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2 class="font-semibold text-lg mt-3 mb-2">$1</h2>')
+      // Bullet points: - item
+      .replace(/^- (.+)$/gm, '<li class="ml-4">$1</li>')
+      // Line breaks
+      .replace(/\n\n/g, '<br/><br/>')
+      .replace(/\n/g, '<br/>')
+    
+    // Wrap consecutive <li> tags in <ul>
+    formatted = formatted.replace(/(<li.*?<\/li>[\s\S]*?)(?=<(?!li))/g, '<ul class="list-disc space-y-1 my-2">$1</ul>')
+    
+    return formatted
+  }
 
   const generateResponse = (userMessage: string): string => {
     const message = userMessage.toLowerCase()
@@ -99,19 +275,49 @@ export default function AIAssistant() {
     setInputMessage('')
     setIsTyping(true)
 
-    // Simulate typing delay
-    setTimeout(() => {
-      const response = generateResponse(content)
+    try {
+      // Send message to Chatbase API
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: [
+            {
+              content: content.trim(),
+              role: 'user',
+            },
+          ],
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to get response')
+      }
+
+      const data = await response.json()
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: response,
+        content: data.text || generateResponse(content), // Fallback to predefined responses
         isUser: false,
         timestamp: new Date()
       }
       
       setMessages(prev => [...prev, aiMessage])
+    } catch (error) {
+      console.error('Error sending message:', error)
+      // Fallback to predefined responses
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        content: generateResponse(content),
+        isUser: false,
+        timestamp: new Date()
+      }
+      setMessages(prev => [...prev, aiMessage])
+    } finally {
       setIsTyping(false)
-    }, 1000 + Math.random() * 1000) // Random delay between 1-2 seconds
+    }
   }
 
   const handleQuickQuestion = (question: string) => {
@@ -120,6 +326,8 @@ export default function AIAssistant() {
 
   const initializeChat = () => {
     if (messages.length === 0) {
+      const newChatId = Date.now().toString()
+      setCurrentChatId(newChatId)
       const welcomeMessage: Message = {
         id: '0',
         content: "Hi! I'm Boss Jun's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
@@ -129,6 +337,67 @@ export default function AIAssistant() {
       setMessages([welcomeMessage])
     }
     setIsOpen(true)
+  }
+
+  const startNewChat = () => {
+    // Save current chat to history if it has messages
+    if (messages.length > 1 && currentChatId) {
+      const chatTitle = messages[1]?.content.slice(0, 30) + '...' || 'New Chat'
+      const newHistory: ChatHistory = {
+        id: currentChatId,
+        title: chatTitle,
+        messages: messages,
+        timestamp: new Date()
+      }
+      const updatedHistory = [newHistory, ...chatHistory].slice(0, 10) // Keep last 10 chats
+      setChatHistory(updatedHistory)
+      localStorage.setItem('chatHistory', JSON.stringify(updatedHistory))
+    }
+
+    // Start fresh chat
+    const newChatId = Date.now().toString()
+    setCurrentChatId(newChatId)
+    const welcomeMessage: Message = {
+      id: '0',
+      content: "Hi! I'm Boss Jun's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
+      isUser: false,
+      timestamp: new Date()
+    }
+    setMessages([welcomeMessage])
+    setShowMenu(false)
+  }
+
+  const endChat = () => {
+    // Save current chat to history before ending
+    if (messages.length > 1 && currentChatId) {
+      const chatTitle = messages[1]?.content.slice(0, 30) + '...' || 'Chat Session'
+      const newHistory: ChatHistory = {
+        id: currentChatId,
+        title: chatTitle,
+        messages: messages,
+        timestamp: new Date()
+      }
+      const updatedHistory = [newHistory, ...chatHistory].slice(0, 10)
+      setChatHistory(updatedHistory)
+      localStorage.setItem('chatHistory', JSON.stringify(updatedHistory))
+    }
+    setMessages([])
+    setCurrentChatId('')
+    setIsOpen(false)
+    setShowMenu(false)
+  }
+
+  const loadChatHistory = (chat: ChatHistory) => {
+    setMessages(chat.messages)
+    setCurrentChatId(chat.id)
+    setShowHistory(false)
+    setShowMenu(false)
+  }
+
+  const clearHistory = () => {
+    setChatHistory([])
+    localStorage.removeItem('chatHistory')
+    setShowHistory(false)
   }
 
   return (
@@ -161,7 +430,7 @@ export default function AIAssistant() {
           >
             {/* Header */}
             <div 
-              className="bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-700 dark:to-blue-700 p-4 text-white flex items-center justify-between"
+              className="bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-700 dark:to-blue-700 p-4 text-white flex items-center justify-between relative"
             >
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
@@ -172,17 +441,118 @@ export default function AIAssistant() {
                   <p className="text-xs text-primary-100">Ask me about Boss Jun</p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-white/80 hover:text-white transition-colors"
-                aria-label="Close chat"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                {/* Menu Button */}
+                <div className="relative" ref={menuRef}>
+                  <button
+                    onClick={() => setShowMenu(!showMenu)}
+                    className="text-white/80 hover:text-white transition-colors p-1"
+                    aria-label="Menu"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <circle cx="12" cy="5" r="2"/>
+                      <circle cx="12" cy="12" r="2"/>
+                      <circle cx="12" cy="19" r="2"/>
+                    </svg>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {showMenu && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-xl border border-gray-200 dark:border-gray-600 overflow-hidden z-50"
+                    >
+                      <button
+                        onClick={startNewChat}
+                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Start New Chat
+                      </button>
+                      <button
+                        onClick={() => { setShowHistory(true); setShowMenu(false); }}
+                        className="w-full px-4 py-2.5 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        View Recent Chats
+                      </button>
+                      <button
+                        onClick={endChat}
+                        className="w-full px-4 py-2.5 text-left text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        End Chat
+                      </button>
+                    </motion.div>
+                  )}
+                </div>
+
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-white/80 hover:text-white transition-colors"
+                  aria-label="Close chat"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
             </div>
 
+            {/* Chat History Modal */}
+            {showHistory && (
+              <div className="absolute inset-0 bg-white dark:bg-gray-800 z-10 flex flex-col">
+                <div className="bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-700 dark:to-blue-700 p-4 text-white flex items-center justify-between">
+                  <h3 className="font-semibold">Recent Chats</h3>
+                  <button
+                    onClick={() => setShowHistory(false)}
+                    className="text-white/80 hover:text-white transition-colors"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="flex-1 overflow-y-auto p-4">
+                  {chatHistory.length === 0 ? (
+                    <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-8">No recent chats</p>
+                  ) : (
+                    <div className="space-y-2">
+                      {chatHistory.map((chat) => (
+                        <button
+                          key={chat.id}
+                          onClick={() => loadChatHistory(chat)}
+                          className="w-full p-3 text-left bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-lg transition-colors"
+                        >
+                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">{chat.title}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {new Date(chat.timestamp).toLocaleDateString()} • {chat.messages.length} messages
+                          </p>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {chatHistory.length > 0 && (
+                    <button
+                      onClick={clearHistory}
+                      className="w-full mt-4 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                    >
+                      Clear All History
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div 
+              ref={messagesContainerRef}
+              onScroll={handleScroll}
+              className="flex-1 overflow-y-auto p-4 space-y-4 relative"
+            >
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
@@ -197,7 +567,9 @@ export default function AIAssistant() {
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-bl-md'
                     }`}
                   >
-                    <p className="text-sm leading-relaxed">{message.content}</p>
+                    <div className="text-sm leading-relaxed">
+                      {renderMessageContent(message.content)}
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -250,6 +622,22 @@ export default function AIAssistant() {
                     ))}
                   </div>
                 </div>
+              )}
+
+              <div ref={messagesEndRef} />
+              
+              {/* Scroll to Bottom Button */}
+              {showScrollButton && (
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  onClick={scrollToBottom}
+                  className="sticky bottom-4 left-1/2 -translate-x-1/2 w-10 h-10 bg-primary-600 dark:bg-primary-500 text-white rounded-full shadow-lg hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors flex items-center justify-center z-10"
+                  aria-label="Scroll to bottom"
+                >
+                  <ArrowDown className="w-5 h-5" />
+                </motion.button>
               )}
             </div>
 

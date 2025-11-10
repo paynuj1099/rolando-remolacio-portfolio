@@ -1,0 +1,41 @@
+import { NextRequest, NextResponse } from 'next/server'
+
+const CHATBASE_API_KEY = '8bd89eec-c117-458c-9a43-8c7aabce55be'
+const CHATBOT_ID = process.env.NEXT_PUBLIC_CHATBASE_CHATBOT_ID
+
+export async function POST(request: NextRequest) {
+  try {
+    const { messages } = await request.json()
+
+    const response = await fetch('https://www.chatbase.co/api/v1/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${CHATBASE_API_KEY}`,
+      },
+      body: JSON.stringify({
+        chatbotId: CHATBOT_ID,
+        messages: messages,
+        stream: false,
+      }),
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('Chatbase API error:', response.status, errorText)
+      return NextResponse.json(
+        { error: 'Failed to get response from Chatbase' },
+        { status: response.status }
+      )
+    }
+
+    const data = await response.json()
+    return NextResponse.json(data)
+  } catch (error) {
+    console.error('Chat API error:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}
