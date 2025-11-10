@@ -603,7 +603,7 @@ export default function AIAssistant() {
                   <Sparkles className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">AI Assistant</h3>
+                  <h3 className="font-semibold">Neo</h3>
                   <p className="text-xs text-primary-100">Ask me about Boss Jun</p>
                 </div>
               </div>
