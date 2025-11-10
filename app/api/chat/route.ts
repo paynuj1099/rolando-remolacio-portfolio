@@ -1,11 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const CHATBASE_API_KEY = '8bd89eec-c117-458c-9a43-8c7aabce55be'
-const CHATBOT_ID = process.env.NEXT_PUBLIC_CHATBASE_CHATBOT_ID
+const CHATBASE_API_KEY = process.env.CHATBASE_API_KEY || '8bd89eec-c117-458c-9a43-8c7aabce55be'
+const CHATBOT_ID = process.env.NEXT_PUBLIC_CHATBASE_CHATBOT_ID || 'kgFk4M06j__SjfgdeXWeY'
 
 export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json()
+
+    // Validate input
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return NextResponse.json(
+        { error: 'Invalid messages format' },
+        { status: 400 }
+      )
+    }
 
     const response = await fetch('https://www.chatbase.co/api/v1/chat', {
       method: 'POST',
