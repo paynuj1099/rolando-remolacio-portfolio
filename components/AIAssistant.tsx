@@ -10,7 +10,10 @@ import {
   User,
   Copy,
   Check,
-  ArrowDown
+  ArrowDown,
+  ThumbsUp,
+  ThumbsDown,
+  RotateCcw
 } from 'lucide-react'
 
 interface Message {
@@ -115,6 +118,9 @@ export default function AIAssistant() {
   const [showHistory, setShowHistory] = useState(false)
   const [chatHistory, setChatHistory] = useState<ChatHistory[]>([])
   const [currentChatId, setCurrentChatId] = useState<string>('')
+  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
+  const [likedMessages, setLikedMessages] = useState<Set<string>>(new Set())
+  const [unlikedMessages, setUnlikedMessages] = useState<Set<string>>(new Set())
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -144,6 +150,19 @@ export default function AIAssistant() {
       }
     }
   }, [messages])
+
+  const formatTime = (date: Date): string => {
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime()
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMs / 3600000)
+    
+    if (diffMins < 1) return 'Just now'
+    if (diffMins < 60) return `${diffMins}m ago`
+    if (diffHours < 24) return `${diffHours}h ago`
+    
+    return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+  }
 
   useEffect(() => {
     // Load chat history from localStorage
@@ -433,6 +452,107 @@ export default function AIAssistant() {
     setShowMenu(false)
   }
 
+  const copyMessageContent = (content: string, messageId: string) => {
+    // Remove HTML tags and get plain text
+    const tempDiv = document.createElement('div')
+    tempDiv.innerHTML = content
+    const plainText = tempDiv.textContent || tempDiv.innerText || ''
+    
+    navigator.clipboard.writeText(plainText).then(() => {
+      setCopiedMessageId(messageId)
+      setTimeout(() => setCopiedMessageId(null), 2000)
+    })
+  }
+
+  const likeMessage = (messageId: string) => {
+    const newLiked = new Set(likedMessages)
+    const newUnliked = new Set(unlikedMessages)
+    
+    if (newLiked.has(messageId)) {
+      newLiked.delete(messageId)
+    } else {
+      newLiked.add(messageId)
+      newUnliked.delete(messageId) // Remove unlike if it was unliked
+    }
+    
+    setLikedMessages(newLiked)
+    setUnlikedMessages(newUnliked)
+  }
+
+  const unlikeMessage = (messageId: string) => {
+    const newLiked = new Set(likedMessages)
+    const newUnliked = new Set(unlikedMessages)
+    
+    if (newUnliked.has(messageId)) {
+      newUnliked.delete(messageId)
+    } else {
+      newUnliked.add(messageId)
+      newLiked.delete(messageId) // Remove like if it was liked
+    }
+    
+    setLikedMessages(newLiked)
+    setUnlikedMessages(newUnliked)
+  }
+
+  const retryMessage = async (messageIndex: number) => {
+    if (messageIndex > 0) {
+      const previousUserMessage = messages[messageIndex - 1]
+      const currentAiMessage = messages[messageIndex]
+      
+      if (previousUserMessage.isUser) {
+        // Remove the current AI response
+        const updatedMessages = messages.slice(0, messageIndex)
+        setMessages(updatedMessages)
+        
+        // Regenerate response without resending user message
+        setIsTyping(true)
+        
+        try {
+          const conversationHistory = updatedMessages.map(msg => ({
+            role: msg.isUser ? 'user' : 'assistant',
+            content: msg.content
+          }))
+
+          const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              messages: conversationHistory,
+              conversationId: currentChatId
+            }),
+          })
+
+          if (!response.ok) {
+            throw new Error('Failed to get response')
+          }
+
+          const data = await response.json()
+          const newAiMessage: Message = {
+            id: Date.now().toString(),
+            content: data.text || generateResponse(previousUserMessage.content),
+            isUser: false,
+            timestamp: new Date()
+          }
+          
+          setMessages(prev => [...prev, newAiMessage])
+        } catch (error) {
+          console.error('Error retrying message:', error)
+          const fallbackMessage: Message = {
+            id: Date.now().toString(),
+            content: generateResponse(previousUserMessage.content),
+            isUser: false,
+            timestamp: new Date()
+          }
+          setMessages(prev => [...prev, fallbackMessage])
+        } finally {
+          setIsTyping(false)
+        }
+      }
+    }
+  }
+
   const loadChatHistory = (chat: ChatHistory) => {
     setMessages(chat.messages)
     setCurrentChatId(chat.id)
@@ -599,12 +719,12 @@ export default function AIAssistant() {
               onScroll={handleScroll}
               className="flex-1 overflow-y-auto p-4 space-y-4 relative"
             >
-              {messages.map((message) => (
+              {messages.map((message, index) => (
                 <motion.div
                   key={message.id}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}
+                  className={`flex flex-col ${message.isUser ? 'items-end' : 'items-start'}`}
                 >
                   <div
                     className={`max-w-[80%] p-3 rounded-2xl ${
@@ -612,11 +732,61 @@ export default function AIAssistant() {
                         ? 'bg-primary-600 dark:bg-primary-500 text-white rounded-br-md'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-bl-md'
                     }`}
+                    title={message.isUser ? formatTime(message.timestamp) : undefined}
                   >
                     <div className="text-sm leading-relaxed">
                       {renderMessageContent(message.content)}
                     </div>
                   </div>
+                  
+                  {/* Action buttons for AI messages (hide for initial greeting) */}
+                  {!message.isUser && message.id !== '0' && (
+                    <div className="flex items-center gap-1 mt-1 px-1">
+                      <button
+                        onClick={() => copyMessageContent(message.content, message.id)}
+                        className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                        title="Copy message"
+                      >
+                        {copiedMessageId === message.id ? (
+                          <Check className="w-3.5 h-3.5" />
+                        ) : (
+                          <Copy className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                      <button
+                        onClick={() => likeMessage(message.id)}
+                        className={`p-1.5 rounded transition-colors ${
+                          likedMessages.has(message.id)
+                            ? 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20'
+                            : 'text-gray-500 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        }`}
+                        title="Good response"
+                      >
+                        <ThumbsUp className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => unlikeMessage(message.id)}
+                        className={`p-1.5 rounded transition-colors ${
+                          unlikedMessages.has(message.id)
+                            ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20'
+                            : 'text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                        }`}
+                        title="Bad response"
+                      >
+                        <ThumbsDown className="w-3.5 h-3.5" />
+                      </button>
+                      <button
+                        onClick={() => retryMessage(index)}
+                        className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                        title="Retry"
+                      >
+                        <RotateCcw className="w-3.5 h-3.5" />
+                      </button>
+                      <span className="text-xs text-gray-400 dark:text-gray-500 ml-1">
+                        {formatTime(message.timestamp)}
+                      </span>
+                    </div>
+                  )}
                 </motion.div>
               ))}
 
