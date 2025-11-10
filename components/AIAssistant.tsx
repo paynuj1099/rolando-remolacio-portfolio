@@ -205,6 +205,14 @@ export default function AIAssistant() {
       phone: '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>'
     }
     
+    // Download button for resume/CV (special marker: [DOWNLOAD_RESUME])
+    formatted = formatted.replace(/\[DOWNLOAD_RESUME\]/gi, () => {
+      return `<br/><br/><a href="/resume.pdf" download="Rolando_Remolacio_Resume.pdf" style="display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.375rem; padding: 0.625rem 1rem; margin: 0.5rem 0; background-color: #f3f4f6; color: #374151; border-radius: 0.5rem; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#e5e7eb'" onmouseout="this.style.backgroundColor='#f3f4f6'">
+        <svg style="width: 1.5rem; height: 1.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <span style="font-size: 0.75rem; font-weight: 500;">Click to Download</span>
+      </a>`
+    })
+
     // Convert markdown links to clickable social icons with proper spacing
     formatted = formatted.replace(/\[Facebook\]\(([^)]+)\)/gi, (match, url) => {
       return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mr-3 mb-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors" title="Facebook">${socialIcons.facebook}<span class="text-sm">Facebook</span></a>`
