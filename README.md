@@ -249,4 +249,4 @@ If you have questions or need help customizing this portfolio:
 
 ---
 
-Made with ❤️ by [Rolando Remolacio](https://rolando-remolacio-portfolio.vercel.app)
+Made with ❤️ by [Rolando Remolacio](https://rolandoremolacio.com)

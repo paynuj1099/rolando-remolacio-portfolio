@@ -14,7 +14,7 @@ import ChatbaseWidget from "@/components/ChatbaseWidget";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://rolando-remolacio-portfolio.vercel.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://rolandoremolacio.com"),
   title: {
     default: "Rolando Remolacio | Full Stack Developer Portfolio",
     template: "%s | Rolando Remolacio",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     "Tech Blog",
     "San Pedro Laguna Developer",
   ],
-  authors: [{ name: "Rolando Remolacio", url: "https://rolando-remolacio-portfolio.vercel.app" }],
+  authors: [{ name: "Rolando Remolacio", url: "https://rolandoremolacio.com" }],
   creator: "Rolando Remolacio",
   publisher: "Rolando Remolacio",
   formatDetection: {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://rolando-remolacio-portfolio.vercel.app",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://rolandoremolacio.com",
     title: "Rolando Remolacio | Full Stack Developer Portfolio",
     description:
       "Professional Full Stack Developer with 3+ years of experience in .NET, React, Next.js, and TypeScript. Explore my projects, technical blog, and get in touch for collaboration opportunities.",
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://rolando-remolacio-portfolio.vercel.app",
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://rolandoremolacio.com",
   },
   category: "Technology",
 };
@@ -103,7 +103,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || "https://rolando-remolacio-portfolio.vercel.app"} />
+        <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || "https://rolandoremolacio.com"} />
         <meta name="google-site-verification" content="your-google-site-verification-code" />
         <Script
           id="schema-org"
@@ -113,7 +113,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Rolando Remolacio",
-              url: process.env.NEXT_PUBLIC_SITE_URL || "https://rolando-remolacio-portfolio.vercel.app",
+              url: process.env.NEXT_PUBLIC_SITE_URL || "https://rolandoremolacio.com",
               image: "/images/profile.jpg",
               jobTitle: "Full Stack Developer",
               worksFor: {
