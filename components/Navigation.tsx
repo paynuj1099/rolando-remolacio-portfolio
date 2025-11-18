@@ -4,14 +4,13 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useDragControls } from 'framer-motion'
-import { Home, User, Briefcase, Code, Mail, Menu, X, Move, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Home, User, Briefcase, Code, Mail, Menu, X, Move, BookOpen, ChevronLeft, ChevronRight, Shield } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 
 const navigation = [
   { name: 'Home', href: '/#home', icon: Home },
   { name: 'About', href: '/#about', icon: User },
   { name: 'Projects', href: '/#projects', icon: Briefcase },
-  { name: 'Skills', href: '/#skills', icon: Code },
   { name: 'Contact', href: '/#contact', icon: Mail },
   { name: 'Blog', href: '/blog', icon: BookOpen },
 ]
@@ -50,6 +49,24 @@ export default function Navigation() {
   }, [pathname])
 
   const closeMenu = () => setIsOpen(false)
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('/#')) {
+      const section = href.slice(2)
+      
+      // If we're on the home page, scroll smoothly
+      if (pathname === '/') {
+        e.preventDefault()
+        const element = document.getElementById(section)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          setActiveSection(section)
+        }
+      }
+      // If we're on another page, let Next.js navigate normally (don't prevent default)
+    }
+    closeMenu()
+  }
 
   return (
     <>
@@ -90,14 +107,22 @@ export default function Navigation() {
                 {navigation.map((item) => {
                   const Icon = item.icon
                   const section = item.href.startsWith('/#') ? item.href.slice(2) : item.href.slice(1)
-                  const isActive = pathname === '/blog' && section === 'blog' ? true : pathname === '/' && activeSection === section
+                  let isActive = false
+                  
+                  if (item.href.startsWith('/#')) {
+                    // For home page sections
+                    isActive = pathname === '/' && activeSection === section
+                  } else {
+                    // For standalone pages
+                    isActive = pathname === item.href
+                  }
 
                   return (
                     <Link
                       key={item.name}
                       href={item.href}
                       className="relative group"
-                      onClick={closeMenu}
+                      onClick={(e) => handleNavClick(e, item.href)}
                     >
                       <motion.div
                         whileHover={{ scale: 1.06 }}
@@ -196,9 +221,15 @@ export default function Navigation() {
                   const section = item.href.startsWith('/#') 
                     ? item.href.slice(2) 
                     : item.href.slice(1)
-                  const isActive = pathname === '/blog' && section === 'blog' 
-                    ? true 
-                    : pathname === '/' && activeSection === section
+                  
+                  let isActive = false
+                  if (item.href.startsWith('/#')) {
+                    // For home page sections
+                    isActive = pathname === '/' && activeSection === section
+                  } else {
+                    // For standalone pages
+                    isActive = pathname === item.href
+                  }
                   
                   return (
                     <motion.div
@@ -214,7 +245,7 @@ export default function Navigation() {
                             ? 'bg-primary-600 dark:bg-primary-500 text-white shadow-lg'
                             : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                         }`}
-                        onClick={closeMenu}
+                        onClick={(e) => handleNavClick(e, item.href)}
                       >
                         <Icon className="w-5 h-5" />
                         <span className="font-medium">{item.name}</span>

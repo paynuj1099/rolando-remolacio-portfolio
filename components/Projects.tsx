@@ -5,15 +5,14 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, Code2, Github } from 'lucide-react'
-import AnimatedCard from './ui/AnimatedCard'
 
 const projects = [
   {
     id: 1,
     title: 'Assisteon Staffing',
-    description: 'Staffing agency website with detailed services and contact forms built using .NET Razor Pages.',
+    description: 'Staffing agency website with detailed services, search engine optimization, and contact forms built using .NET Razor Pages.',
     image: '/images/projects/assisteon_staffing_project.png',
-    technologies: ['.NET Core', 'C#', 'JavaScript', 'Razor Pages', 'Smarter ASP'],
+    technologies: ['.NET Core', 'C#', 'JavaScript', 'Razor Pages', 'Smarter ASP', 'SEO'],
     // githubUrl: '#',
     liveUrl: 'https://assisteonstaffing.com',
     category: 'Frontend',
@@ -148,17 +147,14 @@ export default function Projects() {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project, index) => (
-            <AnimatedCard
+            <motion.div
               key={project.id}
-              glowColor="rgba(59, 130, 246, 0.3)"
-              className="overflow-hidden group p-0"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden group shadow-sm hover:shadow-lg transition-shadow duration-300"
             >
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
                 {/* Project Image */}
                 <div className="relative h-48 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 overflow-hidden">
                   {project.image ? (
@@ -255,8 +251,7 @@ export default function Projects() {
                   ))}
                 </div>
               </div>
-              </motion.div>
-            </AnimatedCard>
+            </motion.div>
           ))}
         </div>
 

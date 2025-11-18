@@ -5,8 +5,8 @@ import { remark } from 'remark'
 import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import rehypeStringify from 'rehype-stringify'
-import rehypeSanitize, { defaultSchema } from 'rehype-sanitize'
 import rehypeRaw from 'rehype-raw'
+import rehypeHighlight from 'rehype-highlight'
 
 export type PostMeta = {
   title: string
@@ -38,24 +38,12 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const { data, content } = matter(fileContents)
 
-  // Extend sanitize schema to allow target and rel attributes on links
-  const customSchema = {
-    ...defaultSchema,
-    attributes: {
-      ...defaultSchema.attributes,
-      a: [
-        ...(defaultSchema.attributes?.a || []),
-        'target',
-        'rel',
-      ],
-    },
-  }
-
+  // Process markdown with syntax highlighting
   const processed = await remark()
     .use(remarkParse)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
-    .use(rehypeSanitize, customSchema)
+    .use(rehypeHighlight)
     .use(rehypeStringify)
     .process(content)
 

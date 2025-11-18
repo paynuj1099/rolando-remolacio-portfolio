@@ -11,7 +11,6 @@ import {
   CheckCircleIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
-import AnimatedCard from "./ui/AnimatedCard";
 
 interface FormData {
   name: string;
@@ -193,12 +192,8 @@ export default function Contact() {
               {contactInfo.map((item, index) => {
                 const Icon = item.icon;
                 return (
-                  <AnimatedCard
+                  <motion.a
                     key={item.label}
-                    glowColor="rgba(59, 130, 246, 0.15)"
-                    className="p-0"
-                  >
-                    <motion.a
                       href={item.href}
                       target={
                         item.href.startsWith("http") ? "_blank" : undefined
@@ -226,7 +221,6 @@ export default function Contact() {
                         </p>
                       </div>
                     </motion.a>
-                  </AnimatedCard>
                 );
               })}
             </div>
@@ -256,13 +250,13 @@ export default function Contact() {
           </motion.div>
 
           {/* Contact Form */}
-          <AnimatedCard glowColor="rgba(99, 102, 241, 0.2)" className="p-8">
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8 shadow-sm hover:shadow-lg transition-shadow duration-300"
+          >
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div>
                   <label
@@ -275,7 +269,7 @@ export default function Contact() {
                     type="text"
                     id="name"
                     {...register("name", { required: "Name is required" })}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
                     placeholder="Your full name"
                   />
                   {errors.name && (
@@ -303,7 +297,7 @@ export default function Contact() {
                         message: "Invalid email address",
                       },
                     })}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
                     placeholder="your.email@example.com"
                   />
                   {errors.email && (
@@ -327,7 +321,7 @@ export default function Contact() {
                     {...register("subject", {
                       required: "Subject is required",
                     })}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors"
                     placeholder="What's this about?"
                   />
                   {errors.subject && (
@@ -351,7 +345,7 @@ export default function Contact() {
                     {...register("message", {
                       required: "Message is required",
                     })}
-                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors resize-none"
                     placeholder="Tell me about your project or just say hello..."
                   />
                   {errors.message && (
@@ -423,8 +417,7 @@ export default function Contact() {
                   </motion.div>
                 )}
               </form>
-            </motion.div>
-          </AnimatedCard>
+          </motion.div>
         </div>
       </div>
     </section>

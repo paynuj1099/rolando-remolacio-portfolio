@@ -58,9 +58,9 @@ export default function Footer() {
           {/* Quick Links */}
           <div>
             <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
               <li>
-                <Link href="/#home" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                   Home
                 </Link>
               </li>
@@ -70,13 +70,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#projects" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                  Projects
-                </Link>
-              </li>
-              <li>
-                <Link href="/#skills" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-                  Skills
+                <Link href="/blog" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Blog
                 </Link>
               </li>
               <li>
@@ -84,15 +79,42 @@ export default function Footer() {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link href="/privacy" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-300 dark:border-gray-800 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
-            © {new Date().getFullYear()} Rolando Remolacio. All rights reserved.
-          </p>
-          <p className="text-gray-600 dark:text-gray-400 text-sm mt-2 sm:mt-0 flex items-center">
+        <div className="mt-8 pt-8 border-t border-gray-300 dark:border-gray-800">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              © {new Date().getFullYear()} Rolando Remolacio. All rights reserved.
+            </p>
+            <div className="flex items-center space-x-4 mt-2 sm:mt-0">
+              <Link 
+                href="/privacy" 
+                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+              >
+                Privacy Policy
+              </Link>
+              <span className="text-gray-400">•</span>
+              <Link 
+                href="/terms" 
+                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 text-sm transition-colors"
+              >
+                Terms of Service
+              </Link>
+            </div>
+          </div>
+          <p className="text-gray-600 dark:text-gray-400 text-sm text-center">
             This portfolio is built using Next.js & Tailwind CSS. Deployed in Vercel.
           </p>
         </div>

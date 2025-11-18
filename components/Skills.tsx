@@ -13,7 +13,6 @@ import {
   Zap,
   Target
 } from 'lucide-react'
-import AnimatedCard from './ui/AnimatedCard'
 
 const skillCategories = [
   {
@@ -126,17 +125,14 @@ export default function Skills() {
             const colorClasses = getColorClasses(category.color)
             
             return (
-              <AnimatedCard
+              <motion.div
                 key={category.title}
-                glowColor={`rgba(59, 130, 246, 0.2)`}
-                className="p-8"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
+                className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8 shadow-sm hover:shadow-lg transition-shadow duration-300"
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
-                >
                   {/* Category Header */}
                   <div className="flex items-center mb-6">
                     <div className={`p-3 rounded-xl ${colorClasses.split(' ').slice(2).join(' ')} dark:bg-opacity-20 mr-4`}>
@@ -195,8 +191,7 @@ export default function Skills() {
                     </motion.div>
                   ))}
                 </div>
-                </motion.div>
-              </AnimatedCard>
+              </motion.div>
             )
           })}
         </div>

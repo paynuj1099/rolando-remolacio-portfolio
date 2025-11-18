@@ -101,11 +101,20 @@ export default async function PostPage({
       </header>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="bg-white dark:bg-gray-800/50 rounded-2xl p-8 sm:p-12 shadow-xl border border-gray-200 dark:border-gray-700">
           <PostContent html={post.content} />
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="text-center border-t border-gray-200 dark:border-gray-700 pt-8">
+          <p className="text-gray-600 dark:text-gray-400">
+            Rolando Remolacio
+          </p>
+        </div>
+      </footer>
     </article>
   );
 }

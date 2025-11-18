@@ -1,9 +1,10 @@
 'use client'
 
 import { motion, useAnimation } from 'framer-motion'
-import { GraduationCap, Briefcase, User, Code2, Quote } from 'lucide-react'
-import AnimatedCard from './ui/AnimatedCard'
+import { GraduationCap, Briefcase, User, Code2, Quote, Calendar, ArrowRight } from 'lucide-react'
 import { useState } from 'react'
+import Link from 'next/link'
+import type { PostMeta } from '@/lib/posts'
 
 const quotes = [
   { text: "Code is like humor. When you have to explain it, it's bad.", author: "Cory House" },
@@ -41,7 +42,7 @@ const timelineData = [
   },
 ]
 
-export default function About() {
+export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] }) {
   const [isPaused, setIsPaused] = useState(false)
 
   return (
@@ -74,7 +75,7 @@ export default function About() {
             className="space-y-6"
           >
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">My Story</h3>
-            <AnimatedCard glowColor="rgba(59, 130, 246, 0.3)">
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div className="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
                 <p>
                   I'm a passionate Full Stack Developer with hands-on experience in building robust, scalable, 
@@ -89,7 +90,7 @@ export default function About() {
                   complex requirements into clean, efficient solutions that make a real impact.
                 </p>
               </div>
-            </AnimatedCard>
+            </div>
 
             {/* Quotes Carousel */}
             <div 
@@ -167,7 +168,7 @@ export default function About() {
                       </div>
                       
                       {/* Content */}
-                      <AnimatedCard glowColor="rgba(59, 130, 246, 0.2)" className="p-6">
+                      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
                           <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
                             {item.title}
@@ -182,7 +183,7 @@ export default function About() {
                         <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                           {item.description}
                         </p>
-                      </AnimatedCard>
+                      </div>
                     </motion.div>
                   )
                 })}
@@ -197,7 +198,7 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mt-16"
+          className="text-center mt-16 mb-16"
         >
           <div className="bg-gradient-to-r from-primary-600 to-blue-600 dark:from-primary-700 dark:to-blue-700 rounded-2xl p-8 text-white shadow-xl">
             <h3 className="text-2xl font-bold mb-4">
@@ -215,6 +216,77 @@ export default function About() {
             </a>
           </div>
         </motion.div>
+
+        {/* Latest from Blog */}
+        {featuredPosts && featuredPosts.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-16"
+          >
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                Latest from the Blog
+              </h3>
+              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                Thoughts, tutorials, and insights on web development and technology
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              {featuredPosts.slice(0, 3).map((post: PostMeta) => (
+                <article
+                  key={post.slug}
+                  className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                >
+                  <div className="p-6">
+                    <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      {new Date(post.date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                      })}
+                    </div>
+                    
+                    <h4 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2">
+                      <Link 
+                        href={`/blog/${post.slug}`}
+                        className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                      >
+                        {post.title}
+                      </Link>
+                    </h4>
+                    
+                    <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                    
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="inline-flex items-center text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 font-medium transition-colors"
+                    >
+                      Read more
+                      <ArrowRight className="w-4 h-4 ml-1" />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Link
+                href="/blog"
+                className="inline-flex items-center px-6 py-3 border-2 border-primary-600 dark:border-primary-500 text-primary-600 dark:text-primary-400 font-semibold rounded-lg hover:bg-primary-50 dark:hover:bg-gray-800 transition-colors"
+              >
+                View All Posts
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Link>
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   )
