@@ -27,7 +27,7 @@ export default function ChatbaseWidget() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="fixed bottom-20 sm:bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 max-w-md h-[500px] rounded-2xl shadow-2xl overflow-hidden"
+            className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 z-50 sm:w-96 sm:max-w-md sm:h-[500px] sm:rounded-2xl shadow-2xl overflow-hidden"
           >
             <iframe
               src="https://www.chatbase.co/chatbot-iframe/kgFk4M06j__SjfgdeXWeY"
