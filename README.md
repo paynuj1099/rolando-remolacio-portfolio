@@ -164,7 +164,7 @@ Update `components/AIAssistant.tsx` to integrate your chosen AI service.
 3. Configure environment variables in Vercel dashboard
 4. Deploy automatically on every push
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/rolandoremolacio/portfolio)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/paynuj1099/rolando-remolacio-portfolio)
 
 ### Other Platforms
 
@@ -236,8 +236,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have questions or need help customizing this portfolio:
 
 - **Email**: rolandojrremolacio@gmail.com
-- **LinkedIn**: [linkedin.com/in/rolandoremolacio](https://www.linkedin.com/in/rolando-remolacio)
-- **GitHub**: [github.com/rolandoremolacio](https://github.com/paynuj1099)
+- **LinkedIn**: [linkedin.com/in/rolando-remolacio](https://www.linkedin.com/in/rolando-remolacio)
+- **GitHub**: [github.com/paynuj1099](https://github.com/paynuj1099)
 
 ## 🙏 Acknowledgments
 
