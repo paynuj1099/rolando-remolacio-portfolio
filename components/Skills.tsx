@@ -34,7 +34,7 @@ const skillCategories = [
     color: 'purple',
     skills: [
       { name: 'JavaScript', level: 80, years: '2.5 yrs' },
-      { name: 'TypeScript', level: 75, years: '1 yr' },
+      { name: 'TypeScript', level: 75, years: '< 1 yr' },
       { name: 'React', level: 75, years: '1 yr' },
       { name: 'Next.js', level: 70, years: '< 1 yr' },
       { name: 'Blazor', level: 75, years: '1 yr' },

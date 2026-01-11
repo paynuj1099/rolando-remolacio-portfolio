@@ -179,7 +179,7 @@ export default function Projects() {
                     <Link
                       href={project.liveUrl}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener"
                       className="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors flex items-center space-x-2"
                     >
                       <ExternalLink className="w-4 h-4" />
