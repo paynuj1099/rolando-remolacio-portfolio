@@ -28,7 +28,7 @@ export default function Hero() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-4 w-4 bg-green-500"></span>
                 </span>
-                Online
+                Open for freelance work!
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
                 Hi, I'm{' '}
