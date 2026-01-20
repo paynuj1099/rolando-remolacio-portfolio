@@ -77,7 +77,7 @@ export default function Hero() {
               </Link>
               <a
                 href="/resume.pdf"
-                download
+                download="Rolando_Remolacio_Resume.pdf"
                 className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-lg border-2 bg-blue-50 border-blue-400 text-blue-700 hover:bg-blue-100 hover:border-blue-500 dark:text-primary-400 dark:border-primary-500 dark:bg-gray-900 dark:hover:bg-gray-800 transition-colors"
               >
                 Download Resume
