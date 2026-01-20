@@ -18,32 +18,32 @@ const quotes = [
 const timelineData = [
   {
     type: 'experience',
+    title: 'Full Stack Developer',
+    organization: 'Practice AI (Remote)',
+    period: 'December 2025 – Present',
+    description: 'Contributed to AI features, microservices, .NET backend, subscriptions, and Blazor frontends for modern web apps.',
+    icon: Briefcase,
+  },
+  {
+    type: 'experience',
     title: 'Programmer Analyst',
-    organization: 'Vertere Global Solutions, Inc.',
-    period: '2025 - Present',
+    organization: 'Vertere Global Solutions, Inc. (Hybrid)',
+    period: 'April 2025 – December 2025',
     description: 'Full-stack development using .NET, C#, JavaScript, and React. Built enterprise applications with Azure DevOps, MS SQL, and modern web technologies.',
     icon: Briefcase,
   },
   {
     type: 'experience',
     title: 'Assistant Engineer 1',
-    organization: 'ROHM Electronics Philippines, Inc.',
+    organization: 'ROHM Electronics Philippines, Inc. (On-site)',
     period: 'May 2023 — April 2025',
     description: 'Developed web applications using various technologies. Maintained and enhanced existing systems, collaborated with cross-functional teams, and contributed to process improvements.',
     icon: Briefcase,
   },
-  {
-    type: 'education',
-    title: 'BS in Computer Engineering',
-    organization: 'Cavite State University - Carmona',
-    period: 'Graduated 2023',
-    description: 'Graduated with a degree in Computer Engineering, building a strong foundation in programming, database management, and software development.',
-    icon: GraduationCap,
-  },
 ]
 
 export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] }) {
-  const [isPaused, setIsPaused] = useState(false)
+  const [isPaused, setIsPaused] = useState(false);
 
   return (
     <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
@@ -65,7 +65,7 @@ export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] })
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Personal Story */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -75,6 +75,7 @@ export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] })
             className="space-y-6"
           >
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">My Story</h3>
+
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div className="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
                 <p>
@@ -92,11 +93,29 @@ export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] })
               </div>
             </div>
 
-            {/* Quotes Carousel */}
+            {/* My Education Section */}
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 mt-10">My Education</h3>
+            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3">
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
+                  <GraduationCap className="w-5 h-5 text-primary-600 dark:text-primary-400" /> BS in Computer Engineering
+                </h4>
+                <span className="text-sm text-primary-600 dark:text-primary-400 font-medium">
+                  Graduated 2023
+                </span>
+              </div>
+              <p className="text-primary-700 dark:text-primary-400 font-medium mb-2">
+                Cavite State University - Carmona
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                Graduated with a degree in Computer Engineering, building a strong foundation in programming, database management, and software development.
+              </p>
+            </div>
+
+            {/* Quotes Carousel - Commented Out
             <div 
               className="mt-8 relative overflow-hidden"
             >
-              {/* Gradient fade edges */}
               <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
               <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-gray-50 dark:from-gray-900 to-transparent z-10 pointer-events-none"></div>
               
@@ -136,6 +155,7 @@ export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] })
                 ))}
               </motion.div>
             </div>
+            */}
           </motion.div>
 
           {/* Timeline */}
@@ -145,7 +165,7 @@ export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] })
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">My Journey</h3>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">My Experiences</h3>
             <div className="relative">
               {/* Timeline line */}
               <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gray-300 dark:bg-gray-700"></div>

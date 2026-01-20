@@ -60,6 +60,7 @@ const skillCategories = [
     skills: [
       { name: 'Azure DevOps', level: 85, years: '1 yr' },
       { name: 'CI/CD', level: 80, years: '1 yr' },
+      { name: 'Jira', level: 70, years: '< 1 yr' },
     ]
   },
   {
