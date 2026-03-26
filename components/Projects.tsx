@@ -25,22 +25,34 @@ const projects = [
     description: 'Landing page demo showcasing product features with interactive 3D elements using Three.js.',
     image: '/images/projects/product_landing_page_demo.png',
     technologies: ['React', 'TypeScript', 'Three.js', 'Vite', 'Vercel'],
-    // githubUrl: '#',
+    githubUrl: 'https://github.com/paynuj1099/React3DThreeJS',
     liveUrl: 'https://productlandingpage-ten.vercel.app/',
     category: 'Frontend',
     tag: 'Live',
     platform: 'Web',
   },
+    {
+    id: 4,
+    title: 'Modern Portfolio Website',
+    description: 'A modern portfolio website showcasing projects, skills, and experience with a responsive design and interactive elements.',
+    image: '/images/projects/modern_portfolio.png',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Vercel'],
+    githubUrl: 'https://github.com/paynuj1099/modern-portfolio',
+    liveUrl: 'https://modern-portfolio-vert-pi.vercel.app/',
+    category: 'Full Stack',
+    tag: 'Live',
+    platform: 'Web',
+  },
   {
     id: 2,
-    title: 'Digital Ledger',
-    description: 'Inventory tracking application with automated stock alerts, barcode scanning, and comprehensive reporting dashboard built with MVC and SQL Server.',
-    image: '/images/projects/digital_ledger.png',
-    technologies: ['.NET Core MVC', 'C#', 'MS SQL', 'Bootstrap'],
-    // githubUrl: '#',
-    liveUrl: null,
+    title: 'Web Development Agency Site',
+    description: 'Agency website showcasing web solutions, services, process, and tech stack. Built for performance, scalability, and modern design.',
+    image: '/images/projects/web_solutions.png',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'GSAP', 'Vercel'],
+    githubUrl: 'https://github.com/paynuj1099/ulo-solutions',
+    liveUrl: 'https://ulo-solutions.vercel.app/',
     category: 'Full Stack',
-    tag: 'In-House',
+    tag: 'Live',
     platform: 'Web',
   },
   {
@@ -54,18 +66,6 @@ const projects = [
     category: 'Full Stack',
     tag: 'In-House',
     platform: 'Windows',
-  },
-  {
-    id: 4,
-    title: 'Daily Checksheet',
-    description: 'Web-based daily checksheet application for logging and tracking daily tasks using barcodes, with user authentication and roles.',
-    image: '/images/projects/daily_checksheet.png',
-    technologies: ['.NET', 'C#', 'MS SQL', 'JavaScript', 'Bootstrap'],
-    // githubUrl: '#',
-    liveUrl: null,
-    category: 'Full Stack',
-    tag: 'In-House',
-    platform: 'Web',
   },
   {
     id: 5,
@@ -191,17 +191,17 @@ export default function Projects() {
                       <span>In-House Project</span>
                     </span>
                   )}
-                  {/* GitHub button
-                  <Link
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-gray-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors flex items-center space-x-2"
-                  >
-                    <Github className="w-4 h-4" />
-                    <span>Code</span>
-                  </Link>
-                  */}
+                  {project.githubUrl && (
+                    <Link
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gray-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors flex items-center space-x-2"
+                    >
+                      <Github className="w-4 h-4" />
+                      <span>Code</span>
+                    </Link>
+                  )}
                 </div>
               </div>
 

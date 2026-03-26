@@ -121,6 +121,8 @@ export default function AIAssistant() {
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const [likedMessages, setLikedMessages] = useState<Set<string>>(new Set())
   const [unlikedMessages, setUnlikedMessages] = useState<Set<string>>(new Set())
+  const [apiCallCount, setApiCallCount] = useState(0)
+  const [useFallbackMode, setUseFallbackMode] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -339,6 +341,25 @@ export default function AIAssistant() {
     setIsTyping(true)
 
     try {
+      // Check if we should use fallback mode (after 5 API calls)
+      if (useFallbackMode || apiCallCount >= 5) {
+        if (!useFallbackMode) {
+          setUseFallbackMode(true)
+          console.log('Switching to fallback mode after 5 API calls')
+        }
+        
+        // Use predefined responses
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          content: generateResponse(content),
+          isUser: false,
+          timestamp: new Date()
+        }
+        setMessages(prev => [...prev, aiMessage])
+        setIsTyping(false)
+        return
+      }
+
       // Convert conversation history to Chatbase format
       const conversationHistory = updatedMessages.map(msg => ({
         content: msg.content,
@@ -353,7 +374,8 @@ export default function AIAssistant() {
         },
         body: JSON.stringify({
           messages: conversationHistory,
-          conversationId: currentChatId, // Include conversation ID for tracking
+          conversationId: currentChatId,
+          apiCallCount: apiCallCount,
         }),
       })
 
@@ -362,17 +384,37 @@ export default function AIAssistant() {
       }
 
       const data = await response.json()
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: data.text || generateResponse(content), // Fallback to predefined responses
-        isUser: false,
-        timestamp: new Date()
-      }
       
-      setMessages(prev => [...prev, aiMessage])
+      // Check if API returned fallback flag
+      if (data.useFallback) {
+        console.log('API returned fallback flag:', data.message)
+        setUseFallbackMode(true)
+        
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          content: generateResponse(content),
+          isUser: false,
+          timestamp: new Date()
+        }
+        setMessages(prev => [...prev, aiMessage])
+      } else {
+        // Increment API call count on success
+        setApiCallCount(prev => prev + 1)
+        
+        const aiMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          content: data.text || generateResponse(content),
+          isUser: false,
+          timestamp: new Date()
+        }
+        setMessages(prev => [...prev, aiMessage])
+      }
     } catch (error) {
       console.error('Error sending message:', error)
-      // Fallback to predefined responses
+      // Switch to fallback mode on error
+      setUseFallbackMode(true)
+      
+      // Use predefined responses
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: generateResponse(content),
@@ -419,9 +461,11 @@ export default function AIAssistant() {
       localStorage.setItem('chatHistory', JSON.stringify(updatedHistory))
     }
 
-    // Start fresh chat
+    // Start fresh chat and reset counters
     const newChatId = Date.now().toString()
     setCurrentChatId(newChatId)
+    setApiCallCount(0)
+    setUseFallbackMode(false)
     const welcomeMessage: Message = {
       id: '0',
       content: "Hi! I'm Boss Jun's AI assistant. I can help you learn about his experience, skills, and projects. What would you like to know?",
@@ -508,6 +552,19 @@ export default function AIAssistant() {
         setIsTyping(true)
         
         try {
+          // Check if we should use fallback mode
+          if (useFallbackMode || apiCallCount >= 5) {
+            const fallbackMessage: Message = {
+              id: Date.now().toString(),
+              content: generateResponse(previousUserMessage.content),
+              isUser: false,
+              timestamp: new Date()
+            }
+            setMessages(prev => [...prev, fallbackMessage])
+            setIsTyping(false)
+            return
+          }
+
           const conversationHistory = updatedMessages.map(msg => ({
             role: msg.isUser ? 'user' : 'assistant',
             content: msg.content
@@ -520,7 +577,8 @@ export default function AIAssistant() {
             },
             body: JSON.stringify({
               messages: conversationHistory,
-              conversationId: currentChatId
+              conversationId: currentChatId,
+              apiCallCount: apiCallCount,
             }),
           })
 
@@ -529,16 +587,29 @@ export default function AIAssistant() {
           }
 
           const data = await response.json()
-          const newAiMessage: Message = {
-            id: Date.now().toString(),
-            content: data.text || generateResponse(previousUserMessage.content),
-            isUser: false,
-            timestamp: new Date()
-          }
           
-          setMessages(prev => [...prev, newAiMessage])
+          if (data.useFallback) {
+            setUseFallbackMode(true)
+            const fallbackMessage: Message = {
+              id: Date.now().toString(),
+              content: generateResponse(previousUserMessage.content),
+              isUser: false,
+              timestamp: new Date()
+            }
+            setMessages(prev => [...prev, fallbackMessage])
+          } else {
+            setApiCallCount(prev => prev + 1)
+            const newAiMessage: Message = {
+              id: Date.now().toString(),
+              content: data.text || generateResponse(previousUserMessage.content),
+              isUser: false,
+              timestamp: new Date()
+            }
+            setMessages(prev => [...prev, newAiMessage])
+          }
         } catch (error) {
           console.error('Error retrying message:', error)
+          setUseFallbackMode(true)
           const fallbackMessage: Message = {
             id: Date.now().toString(),
             content: generateResponse(previousUserMessage.content),
@@ -604,7 +675,12 @@ export default function AIAssistant() {
                 </div>
                 <div>
                   <h3 className="font-semibold">Neo</h3>
-                  <p className="text-xs text-primary-100">Ask me about Boss Jun</p>
+                  <p className="text-xs text-primary-100">
+                    {useFallbackMode 
+                      ? `Offline mode (${apiCallCount}/5 API calls used)` 
+                      : `Ask me about Boss Jun (${apiCallCount}/5)`
+                    }
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
