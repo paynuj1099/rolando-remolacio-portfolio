@@ -268,6 +268,14 @@ export default function AIAssistant() {
       return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mr-3 mb-2 text-gray-900 dark:text-gray-100 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" title="X">${socialIcons.x}<span class="text-sm">X</span></a>`
     })
     
+    // General markdown links: [text](url) - must come after special social media links
+    formatted = formatted.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+      // Check if it's an external link or internal
+      const isExternal = url.startsWith('http') || url.startsWith('https')
+      const target = isExternal ? 'target="_blank" rel="noopener noreferrer"' : ''
+      return `<a href="${url}" ${target} class="text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 underline transition-colors">${text}</a>`
+    })
+    
     // Bold text: **text** or __text__
     formatted = formatted
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
@@ -341,11 +349,11 @@ export default function AIAssistant() {
     setIsTyping(true)
 
     try {
-      // Check if we should use fallback mode (after 5 API calls)
-      if (useFallbackMode || apiCallCount >= 5) {
+      // Check if we should use fallback mode (after 10 API calls)
+      if (useFallbackMode || apiCallCount >= 10) {
         if (!useFallbackMode) {
           setUseFallbackMode(true)
-          console.log('Switching to fallback mode after 5 API calls')
+          console.log('Switching to fallback mode after 10 API calls')
         }
         
         // Use predefined responses
@@ -553,7 +561,7 @@ export default function AIAssistant() {
         
         try {
           // Check if we should use fallback mode
-          if (useFallbackMode || apiCallCount >= 5) {
+          if (useFallbackMode || apiCallCount >= 10) {
             const fallbackMessage: Message = {
               id: Date.now().toString(),
               content: generateResponse(previousUserMessage.content),
@@ -677,8 +685,8 @@ export default function AIAssistant() {
                   <h3 className="font-semibold">Neo</h3>
                   <p className="text-xs text-primary-100">
                     {useFallbackMode 
-                      ? `Offline mode (${apiCallCount}/5 API calls used)` 
-                      : `Ask me about Boss Jun (${apiCallCount}/5)`
+                      ? `Offline mode (${apiCallCount}/10 API calls used)` 
+                      : `Ask me about Boss Jun (${apiCallCount}/10)`
                     }
                   </p>
                 </div>
