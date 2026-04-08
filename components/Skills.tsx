@@ -13,6 +13,7 @@ import {
   Zap,
   Target
 } from 'lucide-react'
+import { calculateSkillYears } from '@/lib/experience'
 
 const skillCategories = [
   {
@@ -20,12 +21,12 @@ const skillCategories = [
     icon: Server,
     color: 'blue',
     skills: [
-      { name: '.NET / .NET Core', level: 85, years: '2.5 yrs' },
-      { name: 'C#', level: 80, years: '2.5 yrs' },
-      { name: 'VB.Net', level: 70, years: '2.5 yrs' },
-      { name: 'Node.js', level: 70, years: '1 yr' },
-      { name: 'PHP', level: 60, years: '1 yr' },
-      { name: 'REST API', level: 85, years: '2.5 yrs' },
+      { name: '.NET / .NET Core', level: 85, years: calculateSkillYears(2023, 5) }, // Started May 2023
+      { name: 'C#', level: 80, years: calculateSkillYears(2023, 5) },
+      { name: 'VB.Net', level: 70, years: calculateSkillYears(2023, 5) },
+      { name: 'Node.js', level: 70, years: calculateSkillYears(2025, 4) }, // Started April 2025
+      { name: 'PHP', level: 60, years: calculateSkillYears(2025, 4) },
+      { name: 'REST API', level: 85, years: calculateSkillYears(2023, 5) },
     ]
   },
   {
@@ -33,13 +34,13 @@ const skillCategories = [
     icon: Code2,
     color: 'purple',
     skills: [
-      { name: 'JavaScript', level: 80, years: '2.5 yrs' },
-      { name: 'TypeScript', level: 75, years: '< 1 yr' },
-      { name: 'React', level: 75, years: '1 yr' },
-      { name: 'Next.js', level: 70, years: '< 1 yr' },
-      { name: 'Blazor', level: 75, years: '1 yr' },
+      { name: 'JavaScript', level: 80, years: calculateSkillYears(2023, 5) },
+      { name: 'TypeScript', level: 75, years: calculateSkillYears(2025, 6) }, // Started June 2025
+      { name: 'React', level: 75, years: calculateSkillYears(2025, 4) },
+      { name: 'Next.js', level: 70, years: calculateSkillYears(2025, 6) },
+      { name: 'Blazor', level: 75, years: calculateSkillYears(2025, 4) },
     //   { name: 'jQuery', level: 85, years: '3 yrs' },
-      { name: 'Tailwind CSS', level: 70, years: '1 yr' },
+      { name: 'Tailwind CSS', level: 70, years: calculateSkillYears(2025, 4) },
     //   { name: 'Bootstrap', level: 90, years: '3 yrs' },
     ]
   },
@@ -48,9 +49,9 @@ const skillCategories = [
     icon: Database,
     color: 'green',
     skills: [
-      { name: 'MS SQL Server', level: 90, years: '2.5 yrs' },
-      { name: 'MySQL', level: 70, years: '1 yr' },
-      { name: 'Database Design', level: 85, years: '2.5 yrs' },
+      { name: 'MS SQL Server', level: 90, years: calculateSkillYears(2023, 5) },
+      { name: 'MySQL', level: 70, years: calculateSkillYears(2025, 4) },
+      { name: 'Database Design', level: 85, years: calculateSkillYears(2023, 5) },
     ]
   },
   {
@@ -58,9 +59,9 @@ const skillCategories = [
     icon: Cloud,
     color: 'orange',
     skills: [
-      { name: 'Azure DevOps', level: 85, years: '1 yr' },
-      { name: 'CI/CD', level: 80, years: '1 yr' },
-      { name: 'Jira', level: 70, years: '< 1 yr' },
+      { name: 'Azure DevOps', level: 85, years: calculateSkillYears(2025, 4) },
+      { name: 'CI/CD', level: 80, years: calculateSkillYears(2025, 4) },
+      { name: 'Jira', level: 70, years: calculateSkillYears(2025, 6) },
     ]
   },
   {
@@ -68,10 +69,10 @@ const skillCategories = [
     icon: Layers,
     color: 'pink',
     skills: [
-      { name: 'MVC Pattern', level: 85, years: '2.5 yrs' },
-      { name: 'Microservices', level: 70, years: '< 1 yr' },
-      { name: 'API Design', level: 85, years: '2.5 yrs' },
-      { name: 'System Design', level: 80, years: '2.5 yrs' },
+      { name: 'MVC Pattern', level: 85, years: calculateSkillYears(2023, 5) },
+      { name: 'Microservices', level: 70, years: calculateSkillYears(2025, 12) }, // Started Dec 2025
+      { name: 'API Design', level: 85, years: calculateSkillYears(2023, 5) },
+      { name: 'System Design', level: 80, years: calculateSkillYears(2023, 5) },
     ]
   },
   {
@@ -79,9 +80,9 @@ const skillCategories = [
     icon: GitBranch,
     color: 'indigo',
     skills: [
-      { name: 'Git', level: 85, years: '2 yrs' },
-      { name: 'GitHub', level: 85, years: '2 yrs' },
-      { name: 'Azure Repos', level: 85, years: '1 yr' },
+      { name: 'Git', level: 85, years: calculateSkillYears(2024, 4) }, // Started April 2024
+      { name: 'GitHub', level: 85, years: calculateSkillYears(2024, 4) },
+      { name: 'Azure Repos', level: 85, years: calculateSkillYears(2025, 4) },
     ]
   },
 ]

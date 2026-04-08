@@ -43,7 +43,7 @@ export default function Hero() {
                 </span>
               </h1>
               <p className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mt-8">
-                Programmer | Analyst
+                Full Stack Developer
               </p>
             </motion.div>
 

@@ -15,6 +15,7 @@ import {
   ThumbsDown,
   RotateCcw
 } from 'lucide-react'
+import { getExperienceDescription } from '@/lib/experience'
 
 interface Message {
   id: string
@@ -23,15 +24,17 @@ interface Message {
   timestamp: Date
 }
 
+const yearsExp = getExperienceDescription();
+
 const predefinedResponses = {
   greeting: [
     "Hi! I'm Neo, Boss Jun's AI assistant. You can ask me anything. Yes, Anything!",
-    "Hello! Welcome to my boss' portfolio. He's a Full Stack Developer with 3+ years of experience. How can I help you?",
+    `Hello! Welcome to my boss' portfolio. He's a Full Stack Developer with ${yearsExp} of experience. How can I help you?`,
     "Hey there! I'm here to answer questions about my boss' background and work. Ask me anything!"
   ],
   experience: [
     "My boss is currently a Programmer Analyst at Vertere Global Solutions (2025-Present). Previously, he worked at ROHM Electronics Philippines (2023-2025). He graduated with a BS in Computer Engineering from Cavite State University in 2023.",
-    "He has 3+ years of full-stack development experience, specializing in .NET, C#, JavaScript, and React. He's worked on enterprise applications, inventory systems, and customer portals."
+    `He has ${yearsExp} of full-stack development experience, specializing in .NET, C#, JavaScript, and React. He's worked on enterprise applications, inventory systems, and customer portals.`
   ],
   skills: [
     "Backend: .NET/Core, C#, VB.Net, Node.js, PHP | Frontend: React, Next.js, TypeScript, Blazor, jQuery | Databases: MS SQL, MySQL, PostgreSQL | DevOps: Azure, Docker, CI/CD",

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getExperienceDescription } from '@/lib/experience'
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY
 
@@ -16,7 +17,7 @@ About Rolando Jr. Remolacio:
 - Earlier Position: Assistant Engineer 1 at ROHM Electronics Philippines, Inc. (On-site) - May 2023 to April 2025
   Developed web applications, maintained and enhanced existing systems
 - Education: BS Computer Engineering, Cavite State University - Carmona (Graduated 2023)
-- Experience: 3+ years of full-stack development
+- Experience: ${getExperienceDescription()} of full-stack development
 - Backend Skills: .NET/Core (2.5 yrs), C# (2.5 yrs), VB.Net (2.5 yrs), Node.js (1 yr), REST API (2.5 yrs)
 - Frontend Skills: JavaScript (2.5 yrs), TypeScript (<1 yr), React (1 yr), Next.js (<1 yr), Blazor (1 yr), Tailwind CSS (1 yr)
 - Database: MS SQL Server (2.5 yrs), MySQL (1 yr), Database Design (2.5 yrs)
