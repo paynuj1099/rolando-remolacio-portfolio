@@ -11,6 +11,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ChatbaseWidget from "@/components/ChatbaseWidget";
 import { VercelToolbar } from "@vercel/toolbar/next";
+import StructuredData from "@/components/StructuredData";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -106,41 +107,7 @@ export default function RootLayout({
       <head>
         <link rel="canonical" href={process.env.NEXT_PUBLIC_SITE_URL || "https://rolandoremolacio.com"} />
         <meta name="google-site-verification" content="your-google-site-verification-code" />
-        <Script
-          id="schema-org"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Rolando Remolacio",
-              url: process.env.NEXT_PUBLIC_SITE_URL || "https://rolandoremolacio.com",
-              image: "/images/profile.jpg",
-              jobTitle: "Full Stack Developer",
-              worksFor: {
-                "@type": "Organization",
-                name: "Vertere Global Solutions"
-              },
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "San Pedro",
-                addressRegion: "Laguna",
-                addressCountry: "Philippines"
-              },
-              email: "rolandojrremolacio@gmail.com",
-              telephone: "+639625871454",
-              alumniOf: {
-                "@type": "CollegeOrUniversity",
-                name: "Cavite State University"
-              },
-              knowsAbout: ["Web Development", "Full Stack Development", ".NET", "React", "Next.js", "TypeScript", "C#", "JavaScript"],
-              sameAs: [
-                "https://github.com/paynuj1099",
-                "https://linkedin.com/in/rolando-remolacio"
-              ]
-            })
-          }}
-        />
+        <StructuredData />
       </head>
       <body
         className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased transition-colors duration-300 overflow-x-hidden w-full`}
