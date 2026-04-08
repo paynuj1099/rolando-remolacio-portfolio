@@ -60,8 +60,7 @@ export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] })
             About Me
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            I'm a passionate Full Stack Developer with hands-on experience in building robust, scalable, 
-            and user-friendly applications.
+            A developer driven by curiosity and a love for solving complex problems through clean, maintainable code.
           </p>
         </motion.div>
 
@@ -79,16 +78,18 @@ export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] })
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div className="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
                 <p>
-                  I'm a passionate Full Stack Developer with hands-on experience in building robust, scalable, 
-                  and user-friendly applications. I specialize in both frontend and backend technologies.
+                  As a Full Stack Developer, I build robust, scalable applications using .NET, C#, JavaScript, and React. 
+                  My journey in software development has equipped me with expertise across both frontend and backend technologies.
                 </p>
                 <p>
-                  My expertise includes .NET, .NET Core, MVC, C#, VB.Net, JavaScript, jQuery, Node.js, React, 
-                  Blazor, MS SQL Server, REST APIs, and modern web development practices using HTML5, CSS3, and Bootstrap 5.
+                  I work with a diverse tech stack including .NET Core, MVC, VB.Net, Node.js, Blazor, MS SQL Server, 
+                  REST APIs, and modern web standards like HTML5, CSS3, and Bootstrap 5. Each project is an opportunity 
+                  to craft solutions that are not just functional, but elegant and maintainable.
                 </p>
                 <p>
-                  With a solid foundation in software development and a problem-solving mindset, I enjoy turning 
-                  complex requirements into clean, efficient solutions that make a real impact.
+                  What drives me is the challenge of transforming complex business requirements into intuitive, 
+                  user-friendly applications. I believe great software is built through continuous learning, 
+                  attention to detail, and a genuine passion for the craft.
                 </p>
               </div>
             </div>

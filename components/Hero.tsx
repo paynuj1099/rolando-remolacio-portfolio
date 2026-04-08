@@ -53,8 +53,8 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed max-w-2xl"
             >
-              Full Stack Developer with hands-on experience in building robust, scalable, and user-friendly applications. 
-              I specialize in .NET, C#, JavaScript, React, and modern web technologies.
+              Transforming ideas into elegant, efficient code. 
+              Building modern web applications that solve real-world problems.
             </motion.p>
 
             <motion.div
