@@ -18,10 +18,10 @@ About Rolando Jr. Remolacio:
   Developed web applications, maintained and enhanced existing systems
 - Education: BS Computer Engineering, Cavite State University - Carmona (Graduated 2023)
 - Experience: ${getExperienceDescription()} of full-stack development
-- Backend Skills: .NET/Core (2.5 yrs), C# (2.5 yrs), VB.Net (2.5 yrs), Node.js (1 yr), REST API (2.5 yrs)
-- Frontend Skills: JavaScript (2.5 yrs), TypeScript (<1 yr), React (1 yr), Next.js (<1 yr), Blazor (1 yr), Tailwind CSS (1 yr)
-- Database: MS SQL Server (2.5 yrs), MySQL (1 yr), Database Design (2.5 yrs)
-- DevOps & Cloud: Azure DevOps (1 yr), CI/CD (1 yr), Jira (<1 yr)
+- Backend Skills: .NET/Core (${require('@/lib/experience').calculateSkillYears(2023, 5)}), C# (${require('@/lib/experience').calculateSkillYears(2023, 5)}), VB.Net (${require('@/lib/experience').calculateSkillYears(2023, 5)}), Node.js (${require('@/lib/experience').calculateSkillYears(2024, 5)}), REST API (${require('@/lib/experience').calculateSkillYears(2023, 5)})
+- Frontend Skills: JavaScript (${require('@/lib/experience').calculateSkillYears(2023, 5)}), TypeScript (${require('@/lib/experience').calculateSkillYears(2025, 1)}), React (${require('@/lib/experience').calculateSkillYears(2025, 1)}), Next.js (${require('@/lib/experience').calculateSkillYears(2025, 1)}), Blazor (${require('@/lib/experience').calculateSkillYears(2025, 1)}), Tailwind CSS (${require('@/lib/experience').calculateSkillYears(2025, 1)})
+- Database: MS SQL Server (${require('@/lib/experience').calculateSkillYears(2023, 5)}), MySQL (${require('@/lib/experience').calculateSkillYears(2024, 5)}), Database Design (${require('@/lib/experience').calculateSkillYears(2023, 5)})
+- DevOps & Cloud: Azure DevOps (${require('@/lib/experience').calculateSkillYears(2025, 1)}), CI/CD (${require('@/lib/experience').calculateSkillYears(2025, 1)}), Jira (${require('@/lib/experience').calculateSkillYears(2025, 1)})
 - Projects: Assisteon Staffing (live), Product Landing Page, Modern Portfolio, Web Development Agency Site, and various enterprise applications
 - Contact: rolandojrremolacio@gmail.com, +639625871454
 - Location: San Pedro, Laguna, Philippines
