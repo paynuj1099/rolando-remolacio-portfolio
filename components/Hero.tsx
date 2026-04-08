@@ -5,7 +5,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Code2, Database, Server, Github, Linkedin, Mail } from 'lucide-react'
 
-export default function Hero() {
+interface HeroProps {
+  showResume?: boolean;
+}
+
+export default function Hero({ showResume = false }: HeroProps) {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-950 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -75,13 +79,15 @@ export default function Hero() {
               >
                 Get In Touch
               </Link>
-              <a
-                href="/resume.pdf"
-                download="Rolando_Remolacio_Resume.pdf"
-                className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-lg border-2 bg-blue-50 border-blue-400 text-blue-700 hover:bg-blue-100 hover:border-blue-500 dark:text-primary-400 dark:border-primary-500 dark:bg-gray-900 dark:hover:bg-gray-800 transition-colors"
-              >
-                Download Resume
-              </a>
+              {showResume && (
+                <a
+                  href="/resume.pdf"
+                  download="Rolando_Remolacio_Resume.pdf"
+                  className="inline-flex items-center justify-center px-8 py-3 text-base font-medium rounded-lg border-2 bg-blue-50 border-blue-400 text-blue-700 hover:bg-blue-100 hover:border-blue-500 dark:text-primary-400 dark:border-primary-500 dark:bg-gray-900 dark:hover:bg-gray-800 transition-colors"
+                >
+                  Download Resume
+                </a>
+              )}
             </motion.div>
 
             {/* Tech Stack Icons */}

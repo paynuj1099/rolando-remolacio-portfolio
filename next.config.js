@@ -1,3 +1,5 @@
+const createWithVercelToolbar = require('@vercel/toolbar/plugins/next');
+
 const nextConfig = {
   async headers() {
     return [
@@ -12,6 +14,15 @@ const nextConfig = {
       },
     ];
   },
+  webpack: (config, { isServer }) => {
+    // Handle optional @vercel/flags-definitions module
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      '@vercel/flags-definitions': false,
+    };
+    return config;
+  },
 }
 
-module.exports = nextConfig
+const withVercelToolbar = createWithVercelToolbar();
+module.exports = withVercelToolbar(nextConfig);

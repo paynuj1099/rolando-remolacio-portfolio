@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ChatbaseWidget from "@/components/ChatbaseWidget";
+import { VercelToolbar } from "@vercel/toolbar/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -158,6 +159,7 @@ export default function RootLayout({
           <AIAssistant />
           <Analytics />
           <SpeedInsights />
+          {process.env.NODE_ENV === 'development' && <VercelToolbar />}
         </ThemeProvider>
       </body>
     </html>

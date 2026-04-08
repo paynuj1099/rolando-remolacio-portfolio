@@ -11,9 +11,10 @@ import type { PostMeta } from '@/lib/posts'
 
 interface HomeWrapperProps {
   featuredPosts: PostMeta[];
+  showResume?: boolean;
 }
 
-export default function HomeWrapper({ featuredPosts }: HomeWrapperProps) {
+export default function HomeWrapper({ featuredPosts, showResume = false }: HomeWrapperProps) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function HomeWrapper({ featuredPosts }: HomeWrapperProps) {
   return (
     <>
       <LoadingScreen isLoading={isLoading} />
-      <Hero />
+      <Hero showResume={showResume} />
       <About featuredPosts={featuredPosts} />
       <Projects />
       <Skills />
