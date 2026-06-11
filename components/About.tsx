@@ -20,7 +20,7 @@ const timelineData = [
     type: 'experience',
     title: 'Full Stack Developer',
     organization: 'Practice AI (Remote)',
-    period: 'December 2025 – Present',
+    period: 'December 2025 – June 2026',
     description: 'Contributed to AI features, microservices, .NET backend, subscriptions, and Blazor frontends for modern web apps.',
     icon: Briefcase,
   },
