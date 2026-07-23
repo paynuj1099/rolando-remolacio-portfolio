@@ -76,7 +76,7 @@ export default function LoadingScreen({ isLoading }: LoadingScreenProps) {
             </motion.div>
 
             {/* Loading Dots */}
-            <div className="flex gap-2">
+            {/* <div className="flex gap-2">
               {[0, 1, 2].map((index) => (
                 <motion.div
                   key={index}
@@ -90,7 +90,7 @@ export default function LoadingScreen({ isLoading }: LoadingScreenProps) {
                   className="w-2 h-2 rounded-full bg-primary-600 dark:bg-primary-400"
                 />
               ))}
-            </div>
+            </div> */}
           </div>
         </motion.div>
       )}

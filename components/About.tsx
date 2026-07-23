@@ -78,7 +78,7 @@ export default function About({ featuredPosts }: { featuredPosts?: PostMeta[] })
             <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-sm hover:shadow-lg transition-shadow duration-300">
               <div className="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
                 <p>
-                  As a Full Stack Developer, I build robust, scalable applications using .NET, C#, JavaScript, and React. 
+                  As a Full Stack Developer with 3+ years of experience, I build robust, scalable applications using .NET, C#, JavaScript, and React. 
                   My journey in software development has equipped me with expertise across both frontend and backend technologies.
                 </p>
                 <p>

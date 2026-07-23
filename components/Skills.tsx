@@ -51,6 +51,7 @@ const skillCategories = [
     skills: [
       { name: 'MS SQL Server', level: 90, years: calculateSkillYears(2023, 5) },
       { name: 'MySQL', level: 70, years: calculateSkillYears(2025, 4) },
+      { name: 'MongoDB', level: 70, years: calculateSkillYears(2025, 4) },
       { name: 'Database Design', level: 85, years: calculateSkillYears(2023, 5) },
     ]
   },
@@ -71,15 +72,19 @@ const skillCategories = [
     skills: [
       { name: 'MVC Pattern', level: 85, years: calculateSkillYears(2023, 5) },
       { name: 'Microservices', level: 70, years: calculateSkillYears(2025, 12) }, // Started Dec 2025
+      { name: 'Prompt Engineering', level: 70, years: calculateSkillYears(2025, 12) },
       { name: 'API Design', level: 85, years: calculateSkillYears(2023, 5) },
       { name: 'System Design', level: 80, years: calculateSkillYears(2023, 5) },
     ]
   },
   {
-    title: 'Version Control',
+    title: 'AI & Version Control',
     icon: GitBranch,
     color: 'indigo',
     skills: [
+      { name: 'Claude AI', level: 70, years: calculateSkillYears(2025, 4) },
+      { name: 'Copilot', level: 70, years: calculateSkillYears(2025, 4) },
+      { name: 'Azure OpenAI', level: 70, years: calculateSkillYears(2025, 12) },
       { name: 'Git', level: 85, years: calculateSkillYears(2024, 4) }, // Started April 2024
       { name: 'GitHub', level: 85, years: calculateSkillYears(2024, 4) },
       { name: 'Azure Repos', level: 85, years: calculateSkillYears(2025, 4) },
