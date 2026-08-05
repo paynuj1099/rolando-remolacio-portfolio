@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { Github, Linkedin, Mail, Heart, Facebook } from 'lucide-react'
 
@@ -33,11 +34,14 @@ export default function Footer() {
             href="https://www.smarterasp.net/index?r=ulosolutions"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Visit SmarterASP"
+            aria-label="Visit SmarterASP hosting"
           >
-            <img
-              src="https://www.smarterasp.net/affiliate/728X90.gif"
-              alt="SmarterASP affiliate banner"
+            <Image
+              src="/images/ads/smarterasp-banner.gif"
+              alt="SmarterASP hosting banner advertisement"
+              width={728}
+              height={90}
+              priority
               className="rounded-md border border-gray-200 dark:border-gray-700"
             />
           </a>
