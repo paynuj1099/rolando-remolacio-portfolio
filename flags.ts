@@ -1,7 +1,10 @@
 import { flag } from 'flags/next';
 import { vercelAdapter } from '@flags-sdk/vercel';
 
-export const showResume = flag({
+export const showResume = flag<boolean>({
   key: 'show-resume',
-  adapter: vercelAdapter(),
+  description: 'Show resume section',
+  adapter: process.env.FLAGS ? vercelAdapter() : undefined,
+  decide: () => process.env.SHOW_RESUME === 'true',
+  defaultValue: false,
 });
