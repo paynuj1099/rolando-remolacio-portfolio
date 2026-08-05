@@ -28,6 +28,21 @@ export default function Footer() {
   return (
     <footer className="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-white transition-colors duration-300">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-center mb-8">
+          <a
+            href="https://www.smarterasp.net/index?r=ulosolutions"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit SmarterASP"
+          >
+            <img
+              src="https://www.smarterasp.net/affiliate/728X90.gif"
+              alt="SmarterASP affiliate banner"
+              className="rounded-md border border-gray-200 dark:border-gray-700"
+            />
+          </a>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand Section */}
           <div className="col-span-1 md:col-span-2">
