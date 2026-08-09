@@ -24,7 +24,7 @@ export default function StructuredData() {
     "@id": "https://rolandoremolacio.com/#person",
     "name": "Rolando Remolacio",
     "alternateName": "Jun Remolacio",
-    "image": "https://rolandoremolacio.com/images/profile.png",
+    "image": "https://rolandoremolacio.com/images/profile1.png",
     "url": "https://rolandoremolacio.com",
     "sameAs": [
       "https://github.com/paynuj1099",
@@ -67,7 +67,7 @@ export default function StructuredData() {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Rolando Remolacio - Full Stack Development Services",
-    "image": "https://rolandoremolacio.com/images/profile.png",
+    "image": "https://rolandoremolacio.com/images/profile1.png",
     "url": "https://rolandoremolacio.com",
     "telephone": "+639625871454",
     "email": "rolandojrremolacio@gmail.com",

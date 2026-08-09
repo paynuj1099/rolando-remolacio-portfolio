@@ -37,7 +37,7 @@ export default function AboutPage() {
                 <div className="relative w-48 h-48 mx-auto mb-6 rounded-full overflow-hidden bg-gradient-to-br from-primary-200 to-primary-400 dark:from-primary-800 dark:to-primary-600 flex items-center justify-center">
                   <div className="text-5xl font-bold text-white">RR</div>
                   <Image
-                    src="/images/profile.png"
+                    src="/images/profile1.png"
                     alt="Rolando Remolacio"
                     fill
                     className="object-cover pointer-events-none select-none"

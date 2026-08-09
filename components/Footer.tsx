@@ -13,11 +13,11 @@ const socialLinks = [
     href: 'https://www.linkedin.com/in/rolando-remolacio',
     icon: Linkedin,
   },
-  {
-    name: 'Facebook',
-    href: 'https://facebook.com/jun.yap1099',
-    icon: Facebook,
-  },
+  // {
+  //   name: 'Facebook',
+  //   href: 'https://facebook.com/jun.yap1099',
+  //   icon: Facebook,
+  // },
   {
     name: 'Email',
     href: 'mailto:rolandojrremolacio@gmail.com',
